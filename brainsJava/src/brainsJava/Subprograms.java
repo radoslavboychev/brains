@@ -57,7 +57,7 @@ public class Subprograms {
 			}
 
 		} while (choice == 1);
-	myScanner.close();
+		myScanner.close();
 	}
 
 	static double Sum(double a, double b) {
@@ -79,5 +79,5 @@ public class Subprograms {
 			return 0;
 		}
 	}
-	
+
 }
