@@ -56,4 +56,5 @@ public class SearchingForValueInArray {
 		System.out.print("]");
 		myScanner.close();
 	}
+	
 }
