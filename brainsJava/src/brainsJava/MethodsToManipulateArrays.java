@@ -5,8 +5,10 @@ import textio.TextIO;
 public class MethodsToManipulateArrays {
 	public static void main(String[] args) {
 
+		//TODO FIX THIS SHIT !?
+		
 //		int arraySize;
-//		int[] myArray;
+		int[] myArray;
 //
 //		arraySize = inputArrayFromUser("Input array: ");
 //
@@ -15,7 +17,7 @@ public class MethodsToManipulateArrays {
 //		printArray(myArray);
 //
 //		fillArray(10, myArray);
-		createArray(5);
+		myArray = createArray(5);
 
 	}
 
@@ -30,7 +32,7 @@ public class MethodsToManipulateArrays {
 	static int[] createArray(int n) {	//creating an array and populating it by selecting 
 
 		int i = 0;		//create the counter
-		int[] myArray = new int[n];	//create a new array with the n as the amount of elements 
+		int[] myArray = new int[n];		//create a new array with the n as the amount of elements 
 
 		System.out.print("Input " + n + " elements of the array: ");
 
