@@ -1,7 +1,5 @@
 package brainsJava;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
 import textio.TextIO;
 
 public class Homework3 {
@@ -10,7 +8,6 @@ public class Homework3 {
 	static final int month = 12;
 
 	public static void main(String[] args) {
-		// TODO
 
 		/*
 		 * Program for monitoring the bank's annual operations // The bank operates in
