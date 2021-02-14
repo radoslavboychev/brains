@@ -44,7 +44,7 @@ public class Homework3 {
 
 		System.out.println("");
 
-		// switch for the menu
+		// switch for the menu.
 
 		do {
 
