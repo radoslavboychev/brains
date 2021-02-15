@@ -16,6 +16,8 @@ public class Main {
 
 		v3.printInfo();
 		v3.calculatePrice(2010);
+		
+		
 
 	}
 
