@@ -19,17 +19,17 @@ public class Player {
 		}
 
 	}
-
+	//declare the enum so i can use it later
 	position p;
 
 	//this is a method that creates a player
-	void createPlayer(String fname, String lname, double height, double weight, position p) {
-		this.fName = fname;
-		this.lName = lname;
-		this.height = height;
-		this.weight = weight;
-		this.p = p;
-	}
+//	void createPlayer(String fname, String lname, double height, double weight, position p) {
+//		this.fName = fname;
+//		this.lName = lname;
+//		this.height = height;
+//		this.weight = weight;
+//		this.p = p;
+//	}
 	//constructor that creates a player
 	Player(String fname, String lname, double height, double weight, position p) {
 		this.fName = fname;
