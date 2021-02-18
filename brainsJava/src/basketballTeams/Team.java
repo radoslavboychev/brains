@@ -2,13 +2,13 @@ package basketballTeams;
 
 public class Team {
 
-	String name;
-	int wins;
-	int losses;
-	double winLossRatio;
+	private String name;
+	private int wins;
+	private int losses;
+	private float winLossRatio;
 
-	// constructor 
-	Team(String name, Player pg, Player sg, Player sf, Player pf, Player c,int wins,int losses)
+	// constructor
+	Team(String name, Player pg, Player sg, Player sf, Player pf, Player c, int wins, int losses)
 
 	{
 		this.name = name;
@@ -16,15 +16,23 @@ public class Team {
 		this.losses = losses;
 	}
 
-	//calculates w/l
-	public void calculateWinLoss() {
-		winLossRatio = wins / losses;
+	// calculates w/l
+	private float calculateWinLoss() {
+		return winLossRatio = wins / losses;
 	}
-	
-	// prints the team info
-	public void printTeam()
-	{
-		calculateWinLoss();
-		System.out.println("Team: " + name + "\nWins: " + wins + "\nLosses: " + losses + "\nWin/Loss: " + winLossRatio + "\nPlayers:\n" );
+
+	// setter for the team info
+	public void setTeam(String name, int wins, int losses, float winLossRatio) {
+		this.name = name;
+		this.wins = wins;
+		this.losses = losses;
+		this.winLossRatio = winLossRatio;
 	}
+
+	//getter for the team
+	public String getTeam() {
+		return "Team: " + name + "\nWins: " + wins + "\nLosses: " + losses + "\nWin/Loss: " + calculateWinLoss()
+				+ "\n\nPlayers:\n";
+	}
+
 }

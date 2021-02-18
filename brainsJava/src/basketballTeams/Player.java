@@ -2,14 +2,16 @@ package basketballTeams;
 
 public class Player {
 
-	String fName;
-	String lName;
+	private String fName;
+	private String lName;
 
-	double height;
-	double weight;
+	private int number;
+
+//	double height;
+//	double weight;
 
 	// set the position of a player with label
-	enum position {
+	public enum position {
 		PG("Point Guard"), SG("Shooting Guard"), SF("Small Forward"), PF("Power Forward"), C("Center");
 
 		public final String positionLabel;
@@ -19,35 +21,43 @@ public class Player {
 		}
 
 	}
-	//declare the enum so i can use it later
-	position p;
 
-	//this is a method that creates a player
-//	void createPlayer(String fname, String lname, double height, double weight, position p) {
-//		this.fName = fname;
-//		this.lName = lname;
-//		this.height = height;
-//		this.weight = weight;
-//		this.p = p;
-//	}
-	//constructor that creates a player
-	Player(String fname, String lname, double height, double weight, position p) {
+	// declare the enum so i can use it later
+	 position p;
+
+	// constructor that creates a player
+	Player(String fname, String lname, int number, position p) {
 		this.fName = fname;
 		this.lName = lname;
-		this.height = height;
-		this.weight = weight;
+		this.p = p;
+		this.number = number;
+	}
+
+
+	// setter for player name
+	public void setPlayerName(String fName, String lName) {
+		this.fName = fName;
+		this.lName = lName;
+	}
+
+	// setter for player info
+	public void setPlayerInfo(int number, position p) {
+		this.number = number;
 		this.p = p;
 	}
 
-	void printPlayer() {
-		System.out.println(
-				"At " + p + ": " + fName + " " + lName + " " + height + "cm tall and weighs " + weight + " kg.");
+	// getter for player name
+	public String getPlayerName() {
+		return this.fName + " " + this.lName;
 	}
-//	void printTeam()
-//	{
-//		
-//		for (int i = 0; i < array.length; i++) {
-//			printPlayer();
-//		}
-//	}
+
+	// getter for player info
+	public String getPlayerInfo() {
+		return "#" + number + " at " + p + " ";
+	}
+	
+	// method to return the player
+	public String getPlayer() {
+		return "Player: " + getPlayerName() + " " + getPlayerInfo();
+	}
 }
