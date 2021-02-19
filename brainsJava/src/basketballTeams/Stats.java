@@ -11,7 +11,6 @@ public class Stats {
  // variables for field goals; attempted fg and made fg; fg ratio
 	private int fgA;
 	private int fgM;
-	private float fgRatio = fgM/fgA;
 	
 	
 	Stats(int points,int rebounds,int assists, int steals, int blocks)
@@ -21,5 +20,17 @@ public class Stats {
 		this.assists = assists;
 		this.steals = steals;
 		this.blocks = blocks;
+		fgRatio();
+		
+	}
+	public void  fgRatio()
+	{
+		float fgRatio = fgM/fgA;
+	}
+	public void getAdvancedStats(int fgA, int fgM)
+	{
+		this.fgA = fgA;
+		this.fgM = fgM;
+		fgRatio();
 	}
 }
