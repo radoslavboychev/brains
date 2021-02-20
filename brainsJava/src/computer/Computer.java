@@ -1,6 +1,8 @@
 package computer;
 
-public class Computer implements Comparable<Computer> {
+import java.util.Comparator;
+
+public class Computer {
 
 	private String processor;
 	private double clockSpeed;
@@ -8,7 +10,7 @@ public class Computer implements Comparable<Computer> {
 	private double indexPerformance;
 
 	// sets the processor info (clock speed and name)
-	void setClockSpeed(String processorName, double clockSpeed) {
+	public void setClockSpeed(String processorName, double clockSpeed) {
 		this.processor = processorName;
 		this.clockSpeed = clockSpeed;
 	}
@@ -24,57 +26,50 @@ public class Computer implements Comparable<Computer> {
 		this.processor = processor;
 		this.clockSpeed = clockSpeed;
 		this.memorySize = memorySize;
-		calculateIndexPerformance(clockSpeed, memorySize);
+		this.indexPerformance = calculateIndexPerformance();
 	}
 
 	// sets the memory size
-	void setMemorySize(int memorySize) {
+	public void setMemorySize(int memorySize) {
 		this.memorySize = memorySize;
 	}
 
 	// calculate the index performance to be used in the constructor or by itself
-	public double calculateIndexPerformance(double clockSpeed, int memorySize) {
+	public double calculateIndexPerformance() {
 
 		return indexPerformance = 10 * (clockSpeed + memorySize);
 
 	}
 
-	// prints the info for he computer
+	// prints the info for the computer
 	void printInfo() {
 		System.out.println("+++++\nProcessor: " + processor + "\nProcessing speed: " + clockSpeed + " \nMemory size: "
 				+ memorySize);
-		calculateIndexPerformance(clockSpeed, memorySize);
+		calculateIndexPerformance();
 		System.out.println("The index performance is: " + indexPerformance);
 		System.out.println("-----");
 	}
 
 	// getter for the processor name
 	public String getProcessorName() {
-		return this.processor;
+		return processor;
 	}
 
 	// getter for clock speed
 	public double getClockSpeed() {
-		return this.clockSpeed;
+		return clockSpeed;
 	}
 
 	// getter for the memory size
 	public int getMemorySize() {
-		return this.memorySize;
+		return memorySize;
 	}
 
 	@Override
-	public int compareTo(Computer c) {
-		double ip = calculateIndexPerformance(clockSpeed, memorySize)
-				- c.calculateIndexPerformance(clockSpeed, memorySize);
+	public int compare(Computer o1, Computer o2) {
 
-		if (ip > 0) {
-			return 1;
-		} else if (ip < 0) {
-
-			return -1;
-		} else
-			return 0;
+	return	o2.getMemorySize().compareTo(o1.getMemorySize());
+		
 
 	}
 

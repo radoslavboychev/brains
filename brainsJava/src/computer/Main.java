@@ -1,5 +1,9 @@
 package computer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -15,22 +19,24 @@ public class Main {
 		Computer myComp6 = new Computer("AMD Ryzen 9 5900X", 3.7, 1028);
 		Computer myComp7 = new Computer("Intel Core i7 10700K", 5.6, 10506);
 
-//		myComp1.setClockSpeed("AMD Ryzen 1300", 3.45);
-//		myComp1.setMemorySize(1024);
-//		myComp1.getClockSpeed();
-//		myComp2.setClockSpeed("Intel Core i5 Q4K3", 2.42);
-//		myComp2.setMemorySize(512);
+	//creates an arrayList of type Computer and adds the objects to the list
+		ArrayList<Computer> alComputers = new ArrayList<Computer>();
 
-		// now to print the info for all PCs
-		myComp1.printInfo();
-		myComp2.printInfo();
-		myComp3.printInfo();
-		myComp4.printInfo();
-		myComp5.printInfo();
-		myComp6.printInfo();
-		myComp7.printInfo();
+		alComputers.add(myComp1);
+		alComputers.add(myComp2);
+		alComputers.add(myComp3);
+		alComputers.add(myComp4);
+		alComputers.add(myComp5);
+		alComputers.add(myComp6);
+		alComputers.add(myComp7);
+
+		//foreach computer in the array -> printinfo
+		for (Computer c : alComputers) {
+
+			c.printInfo();
+		}
 		
-		System.out.println(myComp1.compareTo(myComp2));
+		
 
 	}
 
