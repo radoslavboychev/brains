@@ -203,7 +203,7 @@ public class Main {
 
 		// a little info message
 		System.out.println(
-				"\nYour list of " + e.size() + "  computers, ranked by their performance index (descending)\n");
+				"\nYour list of " + e.size() + " computers, ranked by their performance index (descending)\n");
 
 		// print the info for each computer in the list
 		for (Computer c : e) {
