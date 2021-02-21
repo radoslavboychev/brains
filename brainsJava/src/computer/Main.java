@@ -39,20 +39,24 @@ public class Main {
 			showMenu();
 			switch (choice) {
 			case 1: {
+
+				// populates a list of PCs automatically and sorts it
 				autoCreatePCList();
 			}
 
 				break;
 			case 2: {
+
+				// lets the user input PC specs, populates the list and sorts it
 				customCreatePCList();
 			}
 				break;
 
 			default: {
+				// bye bye
 				System.out.println("~~~ Thank you for using this PC building tool! The program will now exit! ~~~");
 				choice = 0;
 			}
-
 				break;
 			}
 		} while (choice != 0);
@@ -62,7 +66,7 @@ public class Main {
 	// them to the list
 	public static void autoCreatePCList() {
 
-		// the random object
+		// the random object (for random pc specs)
 		Random random = new Random();
 
 		// generates random values for the cpu clock and the RAM (CPU clock between 1GHz
@@ -106,10 +110,11 @@ public class Main {
 
 	// making the list using user inputs
 	public static void customCreatePCList() {
-		int count = 0;
+		int count = 0,memoryRAM;
 		String nameString;
 		double clockSpeedGHz;
-		int memoryRAM;
+
+
 		System.out.print("Insert number of computers to make: ");
 		count = TextIO.getlnInt();
 
@@ -155,59 +160,23 @@ public class Main {
 
 	// method that does the sorting in asc order
 	public static void sortPCAsc(ArrayList<Computer> e) {
-		// we use the sort method from the Collections class on the array list by using
-		// a Comparator object which contains the compare() method and it sorts them (in
-		// ascending order).
 
-		Collections.sort(e, new Comparator<Computer>() {
+		// sort by asc
+		comparatorAsc(e);
 
-			@Override
-			public int compare(Computer o1, Computer o2) {
+		// executes the method to print info for each of the elements
+		sortedPrint(e);
 
-				return Double.compare(o1.getPerformanceIndex(), o2.getPerformanceIndex());
-
-			}
-		});
-
-		// a little info message
-		System.out
-				.println("\nYour list of " + e.size() + " computers, ranked by their performance index (ascending)\n");
-
-		// print the info for each computer in the list
-		for (Computer c : e) {
-
-			System.out.println("\nComputer #" + e.indexOf(c));
-			c.printInfo();
-		}
 	}
 
 	// method that does the sorting in desc order
 	public static void sortPCDesc(ArrayList<Computer> e) {
 
-		// we use the sort method from the Collections class on the array list by using
-		// a Comparator object which contains the compare() method and it sorts them (in
-		// ascending order).
+		// sort by desc
+		comparatorDesc(e);
 
-		Collections.sort(e, new Comparator<Computer>() {
-
-			@Override
-			public int compare(Computer o1, Computer o2) {
-
-				return Double.compare(o2.getPerformanceIndex(), o1.getPerformanceIndex());
-
-			}
-		});
-
-		// a little info message
-		System.out.println(
-				"\nYour list of " + e.size() + " computers, ranked by their performance index (descending)\n");
-
-		// print the info for each computer in the list
-		for (Computer c : e) {
-
-			System.out.println("\nComputer #" + e.indexOf(c));
-			c.printInfo();
-		}
+		// executes the method to print info for each of the elements
+		sortedPrint(e);
 
 	}
 
@@ -229,5 +198,47 @@ public class Main {
 		default:
 			break;
 		}
+	}
+
+	public static void sortedPrint(ArrayList<Computer> e) {
+		// a little info message
+		System.out
+				.println("\nYour list of " + e.size() + " computers, ranked by their performance index (ascending)\n");
+
+		// print the info for each computer in the list
+		for (Computer c : e) {
+
+			System.out.println("\nComputer #" + e.indexOf(c));
+			c.printInfo();
+		}
+	}
+
+	// we use the sort method from the Collections class on the array list by using
+	// a Comparator object which contains the compare() method and it sorts them (in
+	// ascending order).
+	private static void comparatorAsc(ArrayList<Computer> e) {
+		Collections.sort(e, new Comparator<Computer>() {
+
+			@Override
+			public int compare(Computer o1, Computer o2) {
+
+				return Double.compare(o1.getPerformanceIndex(), o2.getPerformanceIndex());
+
+			}
+		});
+	}
+
+	// again sort but descending
+	private static void comparatorDesc(ArrayList<Computer> e) {
+
+		Collections.sort(e, new Comparator<Computer>() {
+
+			@Override
+			public int compare(Computer o1, Computer o2) {
+
+				return Double.compare(o2.getPerformanceIndex(), o1.getPerformanceIndex());
+
+			}
+		});
 	}
 }
