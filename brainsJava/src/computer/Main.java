@@ -1,6 +1,5 @@
 package computer;
 
-import java.awt.event.HierarchyBoundsAdapter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,8 +25,8 @@ public class Main {
 	// to show the menu
 	public static void showMenu() {
 
-		System.out.println("--- Custom PC Builder Tool ---");
-		System.out.println("Select your option: ");
+		System.out.println("--- Custom PC Builder Tool ---\n");
+		System.out.println("Select your option: \n");
 		System.out.println("1. Automatic creation of PC List");
 		System.out.println("2. Manual creation of PC List");
 		System.out.println("0. Exit");
@@ -43,19 +42,14 @@ public class Main {
 			showMenu();
 			switch (choice) {
 			case 1: {
-
 				autoCreatePCList();
 			}
 
 				break;
 			case 2: {
 				customCreatePCList();
-
 			}
 				break;
-			case 3: {
-
-			}
 
 			default: {
 				System.out.println("~~~ Thank you for using this PC building tool! The program will now exit! ~~~");
@@ -108,22 +102,8 @@ public class Main {
 		alComputers.add(myComp6);
 		alComputers.add(myComp7);
 
-		int key;
-		System.out.println("\nHow would you like the the PCs to be sorted?: ");
-		System.out.println("1. Ascending order\n2. Descending order");
-		System.out.print("Your choice: ");
-		key = TextIO.getlnInt();
-
-		switch (key) {
-		case 1:
-			sortPCAsc(alComputers);
-			break;
-		case 2:
-			sortPCDesc(alComputers);
-		default:
-			break;
-		}
-
+		// activate the switch menu for the sorting
+		sortSwitch(alComputers);
 
 	}
 
@@ -137,7 +117,7 @@ public class Main {
 		count = TextIO.getlnInt();
 
 		// make an array list of computers
-		ArrayList<Computer> pcList = new ArrayList<>();
+		ArrayList<Computer> alComputers = new ArrayList<>();
 
 		for (int i = 0; i < count; i++) {
 
@@ -145,10 +125,10 @@ public class Main {
 			Computer c = new Computer();
 
 			// add it to the list
-			pcList.add(c);
+			alComputers.add(c);
 
 			// show you which PC you're making
-			System.out.println("\nCreating PC #" + pcList.indexOf(c));
+			System.out.println("\nCreating PC #" + alComputers.indexOf(c));
 
 			// set the CPU name
 			System.out.print("Insert processor name: ");
@@ -172,21 +152,7 @@ public class Main {
 			c.getPerformanceIndex();
 		}
 
-		int key;
-		System.out.println("\nHow would you like the the PCs to be sorted?: ");
-		System.out.println("1. Ascending order\n2. Descending order");
-		System.out.print("Your choice: ");
-		key = TextIO.getlnInt();
-
-		switch (key) {
-		case 1:
-			sortPCAsc(pcList);
-			break;
-		case 2:
-			sortPCDesc(pcList);
-		default:
-			break;
-		}
+		sortSwitch(alComputers);
 
 	}
 
@@ -207,20 +173,20 @@ public class Main {
 		});
 
 		// a little info message
-		System.out.println("\nYour list of " + e.size()
-				+ " automatically generated computers, ranked by their performance index (ascending)\n");
+		System.out
+				.println("\nYour list of " + e.size() + " computers, ranked by their performance index (ascending)\n");
 
 		// print the info for each computer in the list
 		for (Computer c : e) {
 
+			System.out.println("\nComputer #" + e.indexOf(c));
 			c.printInfo();
 		}
 	}
 
 	// method that does the sorting in desc order
 	public static void sortPCDesc(ArrayList<Computer> e) {
-		
-		
+
 		// we use the sort method from the Collections class on the array list by using
 		// a Comparator object which contains the compare() method and it sorts them (in
 		// ascending order).
@@ -236,15 +202,35 @@ public class Main {
 		});
 
 		// a little info message
-		System.out.println("\nYour list of " + e.size()
-				+ " automatically generated computers, ranked by their performance index (descending)\n");
+		System.out.println(
+				"\nYour list of " + e.size() + "  computers, ranked by their performance index (descending)\n");
 
 		// print the info for each computer in the list
 		for (Computer c : e) {
 
+			System.out.println("\nComputer #" + e.indexOf(c));
 			c.printInfo();
 		}
 
 	}
 
+	// switch menu for sorting choices (asc/desc)
+	public static void sortSwitch(ArrayList<Computer> c) {
+
+		int key;
+		System.out.println("\nHow would you like the the PCs to be sorted?\n");
+		System.out.println("1. Ascending order\n2. Descending order\n");
+		System.out.print("Your choice: ");
+		key = TextIO.getlnInt();
+
+		switch (key) {
+		case 1:
+			sortPCAsc(c);
+			break;
+		case 2:
+			sortPCDesc(c);
+		default:
+			break;
+		}
+	}
 }

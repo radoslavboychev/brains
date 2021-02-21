@@ -2,14 +2,14 @@ package computer;
 
 public class Computer {
 
-	//variables
+	//attributes
 	private String processor;
 	private double clockSpeed;
 	private int memorySize;
 	private double performanceIndex;
 
 	// sets the processor info (clock speed and name)
-	public void setClockSpeed(String processorName, double clockSpeed) {
+	public void setProcessorInfo(String processorName, double clockSpeed) {
 		this.processor = processorName;
 		this.clockSpeed = clockSpeed;
 	}
