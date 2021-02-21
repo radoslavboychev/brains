@@ -109,7 +109,7 @@ public class Main {
 		alComputers.add(myComp7);
 
 		int key;
-		System.out.println("How would you like the the PCs to be sorted?: ");
+		System.out.println("\nHow would you like the the PCs to be sorted?: ");
 		System.out.println("1. Ascending order\n2. Descending order");
 		System.out.print("Your choice: ");
 		key = TextIO.getlnInt();
@@ -124,30 +124,6 @@ public class Main {
 			break;
 		}
 
-//		// we use the sort method from the Collections class on the array list by using
-//		// a Comparator object which contains the compare() method and it sorts them (in
-//		// ascending order).
-//
-//		Collections.sort(alComputers, new Comparator<Computer>() {
-//
-//			@Override
-//			public int compare(Computer o1, Computer o2) {
-//
-//				return Double.compare(o1.getPerformanceIndex(), o2.getPerformanceIndex());
-//
-//			}
-//		});
-//
-//		// a little info message
-//		System.out.println("\nYour list of " + alComputers.size()
-//				+ " automatically generated computers, ranked by their performance index (ascending)");
-//
-//		// print the info for each computer in the list
-//
-//		for (Computer c : alComputers) {
-//
-//			c.printInfo();
-//		}
 
 	}
 
