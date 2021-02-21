@@ -1,6 +1,5 @@
 package computer;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,8 +8,6 @@ import java.util.Random;
 import textio.TextIO;
 
 public class Main {
-
-	static DecimalFormat dFormat = new DecimalFormat("0.00");
 
 	// for the menu
 	static int choice;
