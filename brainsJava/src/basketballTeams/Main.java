@@ -10,9 +10,6 @@ public class Main {
 		// to display the menu
 		showMenu();
 
-		// to display the menu switch 
-		menuSwitch();
-
 	}
 
 	// to show the menu

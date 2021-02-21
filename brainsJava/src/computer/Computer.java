@@ -1,13 +1,12 @@
 package computer;
 
-import java.util.Comparator;
-
 public class Computer {
 
+	//variables
 	private String processor;
 	private double clockSpeed;
 	private int memorySize;
-	private double indexPerformance;
+	private double performanceIndex;
 
 	// sets the processor info (clock speed and name)
 	public void setClockSpeed(String processorName, double clockSpeed) {
@@ -26,7 +25,7 @@ public class Computer {
 		this.processor = processor;
 		this.clockSpeed = clockSpeed;
 		this.memorySize = memorySize;
-		this.indexPerformance = calculateIndexPerformance();
+		this.performanceIndex = getPerformanceIndex();
 	}
 
 	// sets the memory size
@@ -35,19 +34,27 @@ public class Computer {
 	}
 
 	// calculate the index performance to be used in the constructor or by itself
-	public double calculateIndexPerformance() {
+	public double getPerformanceIndex() {
 
-		return indexPerformance = 10 * (clockSpeed + memorySize);
+		performanceIndex = 10 * (clockSpeed + memorySize);
 
+		return performanceIndex;
 	}
 
 	// prints the info for the computer
 	void printInfo() {
 		System.out.println("+++++\nProcessor: " + processor + "\nProcessing speed: " + clockSpeed + " \nMemory size: "
 				+ memorySize);
-		calculateIndexPerformance();
-		System.out.println("The index performance is: " + indexPerformance);
+		getPerformanceIndex();
+		System.out.println("The index performance is: " + performanceIndex);
 		System.out.println("-----");
+	}
+
+	// a simplified version of the printInfo method
+	public String toString() {
+
+		return "{ Processor name: " + getProcessorName() + " Processor clock speed: " + getClockSpeed() + " RAM: "
+				+ memorySize + " Performance index: " + getPerformanceIndex();
 	}
 
 	// getter for the processor name
@@ -65,12 +72,16 @@ public class Computer {
 		return memorySize;
 	}
 
-	@Override
-	public int compare(Computer o1, Computer o2) {
-
-	return	o2.getMemorySize().compareTo(o1.getMemorySize());
-		
-
+	// setter for the processor name
+	public void setProcessorName(String processor) {
+		this.processor = processor;
+	}
+	
+	//setter for the clock speed
+	public void setClockSpeed(double clockSpeed)
+	{
+		this.clockSpeed = clockSpeed;
 	}
 
+	
 }
