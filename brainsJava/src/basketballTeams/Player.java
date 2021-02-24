@@ -115,5 +115,9 @@ public class Player {
 	{
 		return getPlayer() + " " + getPlayerInfo();
 	}
+	
+	public Player() {
+		// TODO default constructor
+	}
 
 }
