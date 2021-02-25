@@ -2,15 +2,12 @@ package basketballTeams;
 
 import textio.TextIO;
 
-public class Player {
-
-	private String fName;
-	private String lName;
+public class Player extends Person {
 
 	private int number;
 
-	// attributes
-	private int layups, closeShot, midRange, threePtShot, insideD, perimeterD, blocks, offReb, defReb;
+	private Attributes playerAttributes;
+	private Stats playerStats;
 
 	// set the position of a player with label
 	public enum position {
@@ -27,46 +24,42 @@ public class Player {
 	// declare the enum so i can use it later
 	position p;
 
-	// constructor that creates a player
-	Player(String fname, String lname, int number, position p, int layups, int closeShot, int midRange, int threePtShot,
-			int insideD, int perimeterD, int blocks, int offReb, int defReb) {
-		this.fName = fname;
-		this.lName = lname;
-		this.p = p;
+
+
+	// constructor
+	public Player(String fName, String lName, int age, int number, position p, Attributes a, Stats s) {
+		super(fName, lName, age);
 		this.number = number;
-		this.blocks = blocks;
-		this.closeShot = closeShot;
-		this.defReb = defReb;
-		this.insideD = insideD;
-		this.midRange = midRange;
-		this.offReb = offReb;
-		this.threePtShot = threePtShot;
+		this.playerStats = s;
+		this.playerAttributes = a;
 
 	}
 
-	// setter for player name
-	public void setPlayerName() {
-		System.out.print("First name: ");
-		this.fName = TextIO.getlnString();
+	public Player() {
 
-		System.out.print("Last name: ");
-		this.lName = TextIO.getlnString();
 	}
 
 	// setter for player info
-	public void setPlayerInfo() {
+	public void setPlayer() {
 
 		int choice = 0;
+		
+		super.setfName();
+		
+		super.setlName();
+		
+		super.setAge();
+		
 
 		System.out.print("Number: ");
-		this.number = TextIO.getlnInt();
 
 		System.out.print("Position: ");
-		System.out.println("1. PG" + "\n2.SG" + "\n3.SF" + "\n4.PF" + "\n5.C");
+		System.out.println("1.PG" + "\n2.SG" + "\n3.SF" + "\n4.PF" + "\n5.C");
 		System.out.print("Position: ");
 
 		choice = TextIO.getlnInt();
 
+		// set the position
 		switch (choice) {
 		case 1:
 			this.p = position.PG;
@@ -79,6 +72,7 @@ public class Player {
 			break;
 		case 4:
 			this.p = position.PF;
+			break;
 		case 5:
 			this.p = position.C;
 			break;
@@ -89,35 +83,37 @@ public class Player {
 
 	}
 
-	// getter for player name
-	public String getPlayerName() {
-		return this.fName + " " + this.lName;
+	// GETTERS & SETTERS
+	public int getNumber() {
+		return number;
 	}
 
-	// getter for player info
-	public String getPlayerInfo() {
-		return "#" + number + ", Position:  " + p + " ";
+	public void setNumber() {
+		this.number = TextIO.getlnInt();
 	}
 
-	// method to return the player
-	public String getPlayer() {
-		return "Player: " + getPlayerName() + " " + getPlayerInfo();
+	public Attributes getPlayerAttributes() {
+		return playerAttributes;
 	}
 
-	public void setPlayerAttributes(int layups, int closeShot) {
+	public void setPlayerAttributes(Attributes playerAttributes) {
+		this.playerAttributes = playerAttributes;
 	}
 
-	public void setPlayer() {
-		setPlayerName();
-		setPlayerInfo();
+	public Stats getPlayerStats() {
+		return playerStats;
 	}
-	public String returnPlayer()
-	{
-		return getPlayer() + " " + getPlayerInfo();
+
+	public void setPlayerStats(Stats playerStats) {
+		this.playerStats = playerStats;
 	}
-	
-	public Player() {
-		// TODO default constructor
+
+	public position getP() {
+		return p;
+	}
+
+	public void setP(position p) {
+		this.p = p;
 	}
 
 }
