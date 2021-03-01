@@ -3,6 +3,19 @@ package basketballTeams;
 import textio.TextIO;
 
 public class Main {
+	
+	
+	//create players
+		//create a player
+			//set position
+			//set name, age etc...
+	//create teams
+		//create the team object
+		//add players to a list
+		//show the list
+	
+	
+	
 	static int choice = 0;
 
 	public static void main(String[] args) {
@@ -20,23 +33,20 @@ public class Main {
 		System.out.println("1. Create a player");
 		System.out.println("0. Exit\n");
 		System.out.print("Your choice: ");
-		choice = TextIO.getlnInt();
+		//choice = TextIO.getlnInt();
 		menuSwitch();
 	}
 
 	// the switch method for the menu
 	public static void menuSwitch() {
-
-		int option = 1;
+	int option = TextIO.getlnInt();
 		do {
 
 			switch (option) {
 			case 1:
 				createPlayer();
 				break;
-			case 2:
-				break;
-			case 10:
+			case 0:
 				option = 0;
 				break;
 			default:
@@ -45,16 +55,12 @@ public class Main {
 		} while (option != 0);
 	}
 
-	
-	
 	public static void createPlayer() {
-		
+
 		Player p = new Player();
-		Stats s = new Stats();
-		Attributes a = new Attributes();
-		
+
 		p.setPlayer();
-		
+
 	}
 
 }

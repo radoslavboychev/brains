@@ -6,8 +6,8 @@ public class Player extends Person {
 
 	private int number;
 
-	private Attributes playerAttributes;
-	private Stats playerStats;
+//	private Attributes playerAttributes;
+//	private Stats playerStats;
 
 	// set the position of a player with label
 	public enum position {
@@ -27,11 +27,11 @@ public class Player extends Person {
 
 
 	// constructor
-	public Player(String fName, String lName, int age, int number, position p, Attributes a, Stats s) {
+	public Player(String fName, String lName, int age, int number, position p) {
 		super(fName, lName, age);
 		this.number = number;
-		this.playerStats = s;
-		this.playerAttributes = a;
+//		this.playerStats = s;
+//		this.playerAttributes = a;
 
 	}
 
@@ -42,7 +42,7 @@ public class Player extends Person {
 	// setter for player info
 	public void setPlayer() {
 
-		int choice = 0;
+		int positionChoice = 0;
 		
 		super.setfName();
 		
@@ -57,10 +57,10 @@ public class Player extends Person {
 		System.out.println("1.PG" + "\n2.SG" + "\n3.SF" + "\n4.PF" + "\n5.C");
 		System.out.print("Position: ");
 
-		choice = TextIO.getlnInt();
+		positionChoice = TextIO.getlnInt();
 
 		// set the position
-		switch (choice) {
+		switch (positionChoice) {
 		case 1:
 			this.p = position.PG;
 			break;
@@ -80,7 +80,6 @@ public class Player extends Person {
 			System.out.println("Invalid input");
 			break;
 		}
-
 	}
 
 	// GETTERS & SETTERS
@@ -92,21 +91,21 @@ public class Player extends Person {
 		this.number = TextIO.getlnInt();
 	}
 
-	public Attributes getPlayerAttributes() {
-		return playerAttributes;
-	}
-
-	public void setPlayerAttributes(Attributes playerAttributes) {
-		this.playerAttributes = playerAttributes;
-	}
-
-	public Stats getPlayerStats() {
-		return playerStats;
-	}
-
-	public void setPlayerStats(Stats playerStats) {
-		this.playerStats = playerStats;
-	}
+//	public Attributes getPlayerAttributes() {
+//		return playerAttributes;
+//	}
+//
+//	public void setPlayerAttributes(Attributes playerAttributes) {
+//		this.playerAttributes = playerAttributes;
+//	}
+//
+//	public Stats getPlayerStats() {
+//		return playerStats;
+//	}
+//
+//	public void setPlayerStats(Stats playerStats) {
+//		this.playerStats = playerStats;
+//	}
 
 	public position getP() {
 		return p;

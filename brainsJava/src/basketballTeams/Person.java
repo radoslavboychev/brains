@@ -2,7 +2,7 @@ package basketballTeams;
 
 import textio.TextIO;
 
-public class Person {
+abstract class Person  {
 
 	
 	private String fName;
