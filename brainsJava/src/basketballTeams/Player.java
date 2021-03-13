@@ -10,7 +10,7 @@ public class Player extends Person {
 //	private Stats playerStats;
 
 	// set the position of a player with label
-	public enum position {
+	private enum position {
 		PG("Point Guard"), SG("Shooting Guard"), SF("Small Forward"), PF("Power Forward"), C("Center");
 
 		public final String positionLabel;
@@ -24,8 +24,6 @@ public class Player extends Person {
 	// declare the enum so i can use it later
 	position p;
 
-
-
 	// constructor
 	public Player(String fName, String lName, int age, int number, position p) {
 		super(fName, lName, age);
@@ -35,6 +33,7 @@ public class Player extends Person {
 
 	}
 
+	// default constructor
 	public Player() {
 
 	}
@@ -43,18 +42,17 @@ public class Player extends Person {
 	public void setPlayer() {
 
 		int positionChoice = 0;
-		
+
 		super.setfName();
-		
+
 		super.setlName();
-		
+
 		super.setAge();
+
+		setNumber();
 		
-
-		System.out.print("Number: ");
-
 		System.out.print("Position: ");
-		System.out.println("1.PG" + "\n2.SG" + "\n3.SF" + "\n4.PF" + "\n5.C");
+		System.out.println("\n1.PG" + "\n2.SG" + "\n3.SF" + "\n4.PF" + "\n5.C");
 		System.out.print("Position: ");
 
 		positionChoice = TextIO.getlnInt();
@@ -88,6 +86,7 @@ public class Player extends Person {
 	}
 
 	public void setNumber() {
+		System.out.print("Number: ");
 		this.number = TextIO.getlnInt();
 	}
 
