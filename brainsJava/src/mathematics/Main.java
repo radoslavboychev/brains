@@ -2,9 +2,12 @@ package mathematics;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 /* Create an interface "Function" which contains 5 methods:
  * 1. Read parameters from file
@@ -33,10 +36,18 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		FileReader input = null;
-		BufferedReader buffInput = null;
-		FileWriter output = null;
-		BufferedWriter buffOutput = null;
+		FileReader input = new FileReader("dataQuadratic.txt");
+		String line;
+
+		try {
+			BufferedReader bReader = new BufferedReader(input);
+			while ((line = bReader.readLine()) != null) {
+				System.out.println(bReader.readLine());
+			}
+
+		} catch (java.io.FileNotFoundException e) {
+			System.out.println("File not found!");
+		}
 
 	}
 }
