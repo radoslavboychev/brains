@@ -18,9 +18,10 @@ public class Main {
 		BufferedReader bafUlaz = null;
 		FileWriter izlaz = null;
 		BufferedWriter bafIzlaz = null;
+	
 
 		try {
-			ulaz = new FileReader("spisak.txt");
+			ulaz = new FileReader("zaposleni\spisak.txt");
 			bafUlaz = new BufferedReader(ulaz);
 			izlaz = new FileWriter("plate.txt");
 			bafIzlaz = new BufferedWriter(izlaz);
