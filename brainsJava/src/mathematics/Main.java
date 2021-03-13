@@ -36,18 +36,26 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		FileReader input = new FileReader("dataQuadratic.txt");
-		String line;
+		FileReader input = new FileReader("C:\\Users\\fxckr\\Desktop\\java\\brains\\brainsJava\\dataQuadratic.txt");
+//		String line;
+//
+//		try {
+//			BufferedReader bReader = new BufferedReader(input);
+//			while ((line = bReader.readLine()) != null) {
+//				System.out.println(bReader.readLine());
+//			}
+//
+//		} catch (java.io.FileNotFoundException e) {
+//			System.out.println("File not found!");
+//		}
 
-		try {
-			BufferedReader bReader = new BufferedReader(input);
-			while ((line = bReader.readLine()) != null) {
-				System.out.println(bReader.readLine());
-			}
+		QuadraticFunction function = new QuadraticFunction();
+		BufferedReader br = new BufferedReader(input);
 
-		} catch (java.io.FileNotFoundException e) {
-			System.out.println("File not found!");
-		}
+		function.readFromFile(br);
+		function.calculateValue();
+		function.checkRealSolution();
+		function.findSolution();
 
 	}
 }

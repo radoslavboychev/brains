@@ -19,8 +19,11 @@ public class QuadraticFunction implements Function {
 
 		try {
 			a = Double.parseDouble(data.readLine());
+			System.out.println("A = " + a);
 			b = Double.parseDouble(data.readLine());
+			System.out.println("B = " + b);
 			c = Double.parseDouble(data.readLine());
+			System.out.println("C = " + c);
 
 		} catch (NumberFormatException e) {
 			e.getMessage();
@@ -57,6 +60,7 @@ public class QuadraticFunction implements Function {
 
 	}
 
+	//TODO THIS DOESNT WORK EXACTLY FIX IT
 	// makes the calculations
 	@Override
 	public void findSolution() {
