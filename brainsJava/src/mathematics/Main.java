@@ -2,18 +2,11 @@ package mathematics;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.PublicKey;
 import java.util.Scanner;
-
-import javax.management.loading.PrivateClassLoader;
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
-import textio.TextIO;
 
 /* Create an interface "Function" which contains 5 methods:
  * 1. Read parameters from file
@@ -30,7 +23,7 @@ import textio.TextIO;
  * 
  * 1. LinearFunction 
  * 		
- * 	y = ax+b
+ * 	y = mx+b
  * 
  * 2. Quadratic function
  * 
@@ -42,6 +35,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
+		// run the menu
 		menu();
 
 	}
@@ -102,7 +96,7 @@ public class Main {
 		// create the readers; set the directory
 		FileReader inputQuadratic = null;
 		try {
-			inputQuadratic = new FileReader("C:\\Users\\fxckr\\Desktop\\java\\brains\\brainsJava\\dataQuadratic.txt");
+			inputQuadratic = new FileReader("dataQuadratic.txt");
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found!");
 			e.printStackTrace();
@@ -111,7 +105,7 @@ public class Main {
 		FileWriter outputQuadratic = null;
 		try {
 			outputQuadratic = new FileWriter(
-					"C:\\Users\\fxckr\\Desktop\\java\\brains\\brainsJava\\outputQuadratic.txt");
+					"outputQuadratic.txt");
 		} catch (IOException e) {
 			System.out.println("An error has occurred!");
 			e.printStackTrace();
@@ -133,7 +127,7 @@ public class Main {
 	public static void runLinear() {
 		FileReader inputLinear = null;
 		try {
-			inputLinear = new FileReader("C:\\Users\\fxckr\\Desktop\\java\\brains\\brainsJava\\dataLinear.txt");
+			inputLinear = new FileReader("dataLinear.txt");
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found!");
 			e.printStackTrace();
@@ -142,12 +136,21 @@ public class Main {
 		// create the function
 		LinearFunction linearFunction = new LinearFunction();
 		BufferedReader brLinear = new BufferedReader(inputLinear);
-
+		
+		FileWriter outputLinear = null;
+		try {
+			outputLinear = new FileWriter("outputLinear.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BufferedWriter bwLinear = new BufferedWriter(outputLinear);
 		// same methods for the linear
 		linearFunction.readFromFile(brLinear);
 		linearFunction.calculateValue();
 		linearFunction.checkRealSolution();
 		linearFunction.findSolution();
+		linearFunction.printSolution(bwLinear);
 	}
 
 }

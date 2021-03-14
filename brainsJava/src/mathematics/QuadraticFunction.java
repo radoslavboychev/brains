@@ -4,18 +4,54 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import fileHandling.fileInformation;
-
 public class QuadraticFunction implements Function {
 
-	double a, b, c, D;
-	double x1, x2;
+	private double a, b, c, D;
+	private double x1, x2;
 
 	public static void main(String[] args) {
 
 	}
 
-//this will read from the file and convert the data (string) to double ((allegedly))
+	// constructors
+	public QuadraticFunction(double a, double b, double c) {
+		super();
+		this.a = a;
+		this.b = b;
+		this.c = c;
+	}
+
+	public QuadraticFunction() {
+
+	}
+
+	// some getters and setters
+	public double getA() {
+		return a;
+	}
+
+	public void setA(double a) {
+		this.a = a;
+	}
+
+	public double getB() {
+		return b;
+	}
+
+	public void setB(double b) {
+		this.b = b;
+	}
+
+	public double getC() {
+		return c;
+	}
+
+	public void setC(double c) {
+		this.c = c;
+	}
+
+	// this will read from the file and convert the data (string) to double
+	// ((allegedly))
 	@Override
 	public void readFromFile(BufferedReader data) {
 
@@ -41,7 +77,7 @@ public class QuadraticFunction implements Function {
 
 	}
 
-//calculates the descriminant
+//calculates the discriminant
 	@Override
 	public void calculateValue() {
 
@@ -74,37 +110,65 @@ public class QuadraticFunction implements Function {
 
 			x1 = (-b + Math.sqrt(D)) / (2 * a);
 			System.out.println("x1 = " + x1);
-			
+
 			x2 = (-b - Math.sqrt(D)) / (2 * a);
 			System.out.println("x2 = " + x2);
-		}
-		else if (D == 0) {
-			
+		} else if (D == 0) {
+
 			x1 = (-b + Math.sqrt(D)) / (2 * a);
-			System.out.println("x1 = " + x1);	
+			System.out.println("x1 = " + x1);
 		}
 
 	}
 
+	// outputs the results from the different cases in a text file
 	@Override
 	public void printSolution(BufferedWriter writer) {
-		
+
 		try {
-			writer.write(String.format("%.2f", x1));
-			writer.newLine();
-			writer.write("x2 = " + x2);
+
+			// print no answer if D<0
+			if (D < 0) {
+
+				writer.write("--- The results of the Quadratic Equation ---\n");
+				writer.write("The parameters were a = " + a + ", b = " + b + ", and c = " + c);
+				writer.write("The discriminant is: " + D);
+				writer.write("D < 0, therefore there are no real solutions");
+
+			}
+			// print only this if D>0
+			else if (D > 0) {
+
+				writer.write("--- The results of the Quadratic Equation ---\n");
+				writer.write("The discriminant is: " + D);
+				writer.newLine();
+				writer.write("x1 = " + x1);
+				writer.newLine();
+				writer.write("x2 = " + x2);
+
+			} else if (D == 0) {
+
+				writer.write("--- The results of the Quadratic Equation ---\n");
+				writer.write("The discriminant is: " + D);
+				writer.newLine();
+				writer.write("x1 = " + x1);
+				writer.newLine();
+				writer.write("x2 = " + x2);
+			}
+
 		} catch (IOException e) {
 			System.out.println("Error!");
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				writer.close();
 			} catch (IOException e) {
 				System.out.println("Error!");
 				e.printStackTrace();
 			}
-		};
+
+		}
+		;
 
 	}
 

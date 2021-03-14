@@ -2,20 +2,23 @@ package mathematics;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import textio.TextIO;
 
 public class LinearFunction implements Function {
 
-	FileReader input = null;
-	BufferedReader buffInput = null;
-	FileWriter output = null;
-	BufferedWriter buffOutput = null;
+	private double a, b, x, y;
 
-	// y = ax+b
+	
+	//constructors
+	public LinearFunction(double a, double b) {
+		this.a = a;
+		this.b = b;
+	}
 
-	double a, b, y, x;
+	public LinearFunction() {
+
+	}
 
 	// read from the file
 	@Override
@@ -42,27 +45,72 @@ public class LinearFunction implements Function {
 	@Override
 	public void calculateValue() {
 
-		y = (a * x) + b;
-		System.out.println(y);
+		/*
+		 * this is probably not the way that's expected to be done in the exercise but I
+		 * couldn't come up with a good way of calculating an y = mx + b without using
+		 * slopes and intercept tables and so on
+		 * 
+		 */
+
+		System.out.print("Insert the value of x: ");
+		x = TextIO.getlnDouble();
 
 	}
 
 	@Override
 	public void checkRealSolution() {
-		// TODO Auto-generated method stub
+
+		y = (a * x) + b;
 
 	}
 
 	@Override
 	public void findSolution() {
-		// TODO Auto-generated method stub
 
 	}
 
+	// this prints the solution to the file
 	@Override
 	public void printSolution(BufferedWriter bfLinear) {
-		// TODO Auto-generated method stub
 
+		try {
+			bfLinear.write("a =  " + getA());
+			bfLinear.newLine();
+			bfLinear.write("b = " + getB());
+			bfLinear.newLine();
+			bfLinear.write("x = " + x);
+			bfLinear.newLine();
+			bfLinear.write("y = " + y);
+			System.out.println("File Writing Complete!");
+		} catch (IOException e) {
+			System.out.println("Error!");
+			e.printStackTrace();
+		} finally {
+			try {
+				bfLinear.close();
+			} catch (IOException e) {
+				System.out.println("Error!");
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	// getters setters etc
+	public double getA() {
+		return a;
+	}
+
+	public void setA(double a) {
+		this.a = a;
+	}
+
+	public double getB() {
+		return b;
+	}
+
+	public void setB(double b) {
+		this.b = b;
 	}
 
 }

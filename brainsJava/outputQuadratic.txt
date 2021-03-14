@@ -1,2 +1,4 @@
-0.50
+--- The results of the Quadratic Equation ---
+The discriminant is: 49.0
+x1 = 0.5
 x2 = -3.0
