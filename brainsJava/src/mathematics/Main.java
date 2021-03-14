@@ -3,11 +3,17 @@ package mathematics;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.PublicKey;
+import java.util.Scanner;
 
+import javax.management.loading.PrivateClassLoader;
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
+import textio.TextIO;
 
 /* Create an interface "Function" which contains 5 methods:
  * 1. Read parameters from file
@@ -36,26 +42,112 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		FileReader input = new FileReader("C:\\Users\\fxckr\\Desktop\\java\\brains\\brainsJava\\dataQuadratic.txt");
-//		String line;
-//
-//		try {
-//			BufferedReader bReader = new BufferedReader(input);
-//			while ((line = bReader.readLine()) != null) {
-//				System.out.println(bReader.readLine());
-//			}
-//
-//		} catch (java.io.FileNotFoundException e) {
-//			System.out.println("File not found!");
-//		}
-
-		QuadraticFunction function = new QuadraticFunction();
-		BufferedReader br = new BufferedReader(input);
-
-		function.readFromFile(br);
-		function.calculateValue();
-		function.checkRealSolution();
-		function.findSolution();
+		menu();
 
 	}
+
+	// this is just a separate method that prints the menu text to the menu
+	public static void menuText() {
+		System.out.println("Choose a function: ");
+		System.out.println("1. Calculate a quadratic equation");
+		System.out.println("2. Calculate a linear equation");
+		System.out.println("0. Exit program");
+
+	}
+
+	// this is for the menu
+	private static int choice;
+
+	public static void menu() {
+
+		try {
+
+			Scanner myScanner = new Scanner(System.in);
+
+			boolean keepGoing = true;
+			// keep showing the menu until the user presses 0
+			while (keepGoing) {
+
+				// print the menu text
+				menuText();
+
+				// get the user input
+				System.out.print("\nYour choice: ");
+				choice = myScanner.nextInt();
+
+				switch (choice) {
+				case 1:
+					runQuadratic();
+					break;
+				case 2:
+					runLinear();
+					break;
+				case 0:
+					keepGoing = false;
+					break;
+				default:
+					break;
+				}
+
+			}
+			myScanner.close();
+		} catch (java.util.InputMismatchException e) {
+			System.out.println("Wrong input format (integers only)");
+		}
+
+	}
+
+	// this runs everything for the quadratic function
+	public static void runQuadratic() {
+		// create the readers; set the directory
+		FileReader inputQuadratic = null;
+		try {
+			inputQuadratic = new FileReader("C:\\Users\\fxckr\\Desktop\\java\\brains\\brainsJava\\dataQuadratic.txt");
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found!");
+			e.printStackTrace();
+		}
+
+		FileWriter outputQuadratic = null;
+		try {
+			outputQuadratic = new FileWriter(
+					"C:\\Users\\fxckr\\Desktop\\java\\brains\\brainsJava\\outputQuadratic.txt");
+		} catch (IOException e) {
+			System.out.println("An error has occurred!");
+			e.printStackTrace();
+		}
+		// create the function
+		QuadraticFunction quadraticFunction = new QuadraticFunction();
+		BufferedReader brQuadratic = new BufferedReader(inputQuadratic);
+		BufferedWriter bfQuadratic = new BufferedWriter(outputQuadratic);
+
+		// execute the methods for the quadratic function
+		quadraticFunction.readFromFile(brQuadratic);
+		quadraticFunction.calculateValue();
+		quadraticFunction.checkRealSolution();
+		quadraticFunction.findSolution();
+		quadraticFunction.printSolution(bfQuadratic);
+	}
+
+	// this runs the whole program for linear equation and all the methods
+	public static void runLinear() {
+		FileReader inputLinear = null;
+		try {
+			inputLinear = new FileReader("C:\\Users\\fxckr\\Desktop\\java\\brains\\brainsJava\\dataLinear.txt");
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found!");
+			e.printStackTrace();
+		}
+
+		// create the function
+		LinearFunction linearFunction = new LinearFunction();
+		BufferedReader brLinear = new BufferedReader(inputLinear);
+
+		// same methods for the linear
+		linearFunction.readFromFile(brLinear);
+		linearFunction.calculateValue();
+		linearFunction.checkRealSolution();
+		linearFunction.findSolution();
+	}
+
 }

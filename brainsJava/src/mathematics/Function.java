@@ -20,6 +20,7 @@ public interface Function {
 
 
 	// prints the solution
-	public void printSolution();
+	public void printSolution(BufferedWriter output);
+
 
 }

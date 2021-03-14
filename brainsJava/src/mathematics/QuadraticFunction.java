@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import fileHandling.fileInformation;
+
 public class QuadraticFunction implements Function {
 
 	double a, b, c, D;
@@ -18,6 +20,7 @@ public class QuadraticFunction implements Function {
 	public void readFromFile(BufferedReader data) {
 
 		try {
+			System.out.println("Reading parameters from file...");
 			a = Double.parseDouble(data.readLine());
 			System.out.println("A = " + a);
 			b = Double.parseDouble(data.readLine());
@@ -26,9 +29,12 @@ public class QuadraticFunction implements Function {
 			System.out.println("C = " + c);
 
 		} catch (NumberFormatException e) {
+			System.out.println("Data is in an invalid format!");
 			e.getMessage();
+
 			e.printStackTrace();
 		} catch (IOException e) {
+			System.out.println("An error has occurred!");
 			e.getMessage();
 			e.printStackTrace();
 		}
@@ -60,30 +66,45 @@ public class QuadraticFunction implements Function {
 
 	}
 
-	//TODO THIS DOESNT WORK EXACTLY FIX IT
 	// makes the calculations
 	@Override
 	public void findSolution() {
 
 		if (D > 0) {
 
-			x1 = (-b + Math.sqrt(D)) / 2 * a;
+			x1 = (-b + Math.sqrt(D)) / (2 * a);
 			System.out.println("x1 = " + x1);
 			
-			x2 = (-b - Math.sqrt(D)) / 2 * a;
+			x2 = (-b - Math.sqrt(D)) / (2 * a);
 			System.out.println("x2 = " + x2);
 		}
 		else if (D == 0) {
 			
-			x1 = (-b + Math.sqrt(D)) / 2 * a;
+			x1 = (-b + Math.sqrt(D)) / (2 * a);
 			System.out.println("x1 = " + x1);	
 		}
 
 	}
 
 	@Override
-	public void printSolution() {
+	public void printSolution(BufferedWriter writer) {
 		
+		try {
+			writer.write(String.format("%.2f", x1));
+			writer.newLine();
+			writer.write("x2 = " + x2);
+		} catch (IOException e) {
+			System.out.println("Error!");
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				System.out.println("Error!");
+				e.printStackTrace();
+			}
+		};
 
 	}
 
