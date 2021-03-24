@@ -5,10 +5,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		
-		Restaurant restaurant = new Restaurant();
-		restaurant.readList("Clients.txt");
-		
-		
 		
 		// testing each functionality
 
