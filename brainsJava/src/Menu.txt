@@ -1,0 +1,4 @@
+chickenSoup soup  2.6
+salad middle  8.9
+Beer drink  5.9
+cake dessert Main 3.7

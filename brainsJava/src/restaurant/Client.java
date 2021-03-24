@@ -1,11 +1,6 @@
 package restaurant;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-
-public class Client implements WorkWithFiles, ClientList{
+public class Client {
 
 	//fields
 	private String fName;
@@ -21,10 +16,13 @@ public class Client implements WorkWithFiles, ClientList{
 		this.adress = adress;
 		this.phoneNum = phoneNum;
 	}
+	
+	//default constructor
 	public Client()
 	{
 		
 	}
+	
 	//getters & setters
 	public String getfName() {
 		return fName;
@@ -50,47 +48,10 @@ public class Client implements WorkWithFiles, ClientList{
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
 	}
-	
-	//reading the client info from the file
-	@Override
-	public void loadFromFile(BufferedReader br) {
-		
-		try {
-			setfName(br.readLine());
-			setlName(br.readLine());
-			setAdress(br.readLine());
-			setPhoneNum(br.readLine());
-			
-		} catch (IOException e) {
-			System.out.println("An error has occurred!");
-			e.printStackTrace();
-		}
-	}
-	@Override
-	public void writeToFile(BufferedWriter bw) {
-		
-		
-	}
 
 	
-
-	@Override
-	public void addToList(Client c, ArrayList<Client> a) {
-		
-		a.add(c);
-		
-	}
-	@Override
-	public void removeFromList(Client c, ArrayList<Client> a) {
-		
-		a.remove(c);
-	}
-	@Override
-	public void searchForClient(Client c, ArrayList<Client> a) {
-		// TODO 
-		
-	}
-
+	
+	
 	
 	
 

@@ -1,76 +1,66 @@
 package restaurant;
 
-import java.util.ArrayList;
-
-public class Order implements OrderList {
+public class Order {
 
 	// variables
-	private ArrayList<Item> items;
-	private Client client;
-	private boolean success;
+	private int amount = 0;
+	private Meal orderedMeal;
+	private boolean isSuccess;
+	private Client orderClient;
 
 	// constructor
-	public Order(ArrayList<Item> items, Client client, boolean success) {
-		super();
-		this.items = items;
-		this.client = client;
-		this.success = success;
+	public Order(Client orderClient, Meal orderedMeal, int amount, boolean isSuccess) {
+		this.amount = amount;
+		this.orderedMeal = orderedMeal;
+		this.isSuccess = isSuccess;
+		this.orderClient = orderClient;
+
 	}
 
 	// default constructor
 	public Order() {
 	}
 
-	// getters & setters
-	public ArrayList<Item> getItems() {
-		return items;
+	public int getAmount() {
+		return amount;
 	}
 
-	public void setItems(ArrayList<Item> items) {
-		this.items = items;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
-	public Client getClient() {
-		return client;
+	public Meal getOrderedMeal() {
+		return orderedMeal;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setOrderedMeal(Meal orderedMeal) {
+		this.orderedMeal = orderedMeal;
 	}
 
 	public boolean isSuccess() {
-		return success;
+		return isSuccess;
 	}
 
-	public void setSuccess(boolean success) {
-		this.success = success;
+	public void setSuccess(boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
 
-	@Override
-	public void createOrderList() {
-
-		ArrayList<Order> orderList = new ArrayList<Order>();
-
+	public Client getOrderClient() {
+		return orderClient;
 	}
 
-	@Override
-	public void addOrderToList(Order o, ArrayList<Order> e) {
-		
-		e.add(o);
-		
+	public void setOrderClient(Client orderClient) {
+		this.orderClient = orderClient;
 	}
 
 	@Override
-	public void removeOrderFromList(Order o, ArrayList<Order> e) {
-		
-		e.remove(o);
-		
+	public String toString() {
+		return "Order [amount=" + amount + ", orderedMeal=" + orderedMeal + ", isSuccess=" + isSuccess
+				+ ", orderClient=" + orderClient + ", getAmount()=" + getAmount() + ", getOrderedMeal()="
+				+ getOrderedMeal() + ", isSuccess()=" + isSuccess() + ", getOrderClient()=" + getOrderClient() + "]";
 	}
 
-	@Override
-	public void findOrderFromList(Order o, ArrayList<Order> e) {
-		// TODO 
-		
-	}
-
+	// getters & setters
+	
+	
 }
