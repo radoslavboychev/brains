@@ -17,5 +17,7 @@ public class examPrep04 {
 		Arrays.sort(array);
 		System.out.println("Sorted array: " + Arrays.toString(array));
 
+		
+		
 	}
 }

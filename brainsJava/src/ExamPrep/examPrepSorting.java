@@ -9,7 +9,7 @@ public class examPrepSorting {
 
 		int tmp, i, j;
 
-		System.out.println("--- Program to sort an array with natural numbers ---");
+		
 
 		System.out.print("Max number of elements: ");
 		final int arrayLimit = myScanner.nextInt();
@@ -20,13 +20,7 @@ public class examPrepSorting {
 			System.out.print("Insert element " + (i + 1) + ": ");
 			myArray[i] = myScanner.nextInt();
 		}
-		System.out.println();
-		System.out.println();
 
-		System.out.print("Elements of the array before sorting are: ["); // present the elements before sorting
-		for (i = 0; i < arrayLimit; i++) {
-			System.out.print(myArray[i]);
-		}
 		System.out.println("]");
 
 		for (i = 0; i < arrayLimit - 1; i++) {
@@ -41,9 +35,9 @@ public class examPrepSorting {
 		System.out.println();
 		System.out.println();
 
-		System.out.print("Elements of the array before sorting are: ["); // present the elements after sorting
+		System.out.print("Elements of the array after sorting are: ["); // present the elements after sorting
 		for (i = 0; i < arrayLimit; i++) {
-			System.out.print(myArray[i]);
+			System.out.print(" " + myArray[i]);
 		}
 		System.out.println("]");
 
