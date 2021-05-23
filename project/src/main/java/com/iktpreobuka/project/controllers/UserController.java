@@ -3,6 +3,8 @@ package com.iktpreobuka.project.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,10 +12,14 @@ import com.iktpreobuka.project.entities.UserEntity;
 import com.iktpreobuka.project.entities.UserEntity.EUserRole;
 
 @RestController
-@RequestMapping(value = "/project/users")
+
 public class UserController {
 
-	private List<UserEntity> getDB() {
+	/**
+	 * Zadatak 1 - 1.3
+	 */
+	@RequestMapping("/project/users")
+	protected List<UserEntity> getDB() {
 		List<UserEntity> users = new ArrayList<>();
 
 		UserEntity u1 = new UserEntity(1, "Vladimir", "Dimitrieski", "dimitrieski@uns.ac.rs", "vladimir", "vladimir",
@@ -31,4 +37,18 @@ public class UserController {
 		return users;
 
 	}
+
+	/**
+	 * Zadatak 1 - 1.4
+	 */
+	@RequestMapping("/project/users/{id}")
+	public UserEntity getById(@PathVariable String id)
+	{
+		for (UserEntity user : getDB()) {
+			if(user.getId() == Integer.parseInt(id))
+				return user;
+		}
+		return null;
+	}
+
 }
