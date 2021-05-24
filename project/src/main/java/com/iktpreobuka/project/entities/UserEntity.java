@@ -13,10 +13,11 @@ public class UserEntity {
 		ROLE_CUSTOMER, ROLE_ADMIN, ROLE_SELLER
 	}
 
+	//enum user roles
 	private EUserRole userRole;
 
 	// constructor
-	public UserEntity(int id, String first_name, String last_name, String username, String password, String email,
+	public UserEntity(int id, String first_name, String last_name, String email, String username, String password,
 			EUserRole userRole) {
 		super();
 		this.id = id;

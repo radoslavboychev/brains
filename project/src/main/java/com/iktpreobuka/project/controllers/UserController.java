@@ -1,11 +1,15 @@
 package com.iktpreobuka.project.controllers;
 
+import java.awt.PageAttributes.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.project.entities.UserEntity;
@@ -42,13 +46,44 @@ public class UserController {
 	 * Zadatak 1 - 1.4
 	 */
 	@RequestMapping("/project/users/{id}")
-	public UserEntity getById(@PathVariable String id)
-	{
+	public UserEntity getById(@PathVariable String id) {
 		for (UserEntity user : getDB()) {
-			if(user.getId() == Integer.parseInt(id))
+			if (user.getId() == Integer.parseInt(id))
 				return user;
+			else
+				return null;
 		}
 		return null;
 	}
 
+	/**
+	 * Zadatak 1 - 1.5
+	 */
+	@PostMapping("/project/users")
+	public UserEntity createUser(@RequestBody UserEntity createdUser) {
+
+		System.out.println("User: " + createdUser.getId() + " " +  createdUser.getFirst_name() + " " +  createdUser.getLast_name()
+				+ " " + createdUser.getUsername() + " " + createdUser.getPassword() + " "  + createdUser.getUserRole());
+
+		//set the role as customer, regardless of what the role has been set in the request
+		//TODO - make this better!?
+		createdUser.setUserRole(EUserRole.ROLE_CUSTOMER);
+		
+		getDB().add(createdUser);
+		
+		//returns the user
+		return createdUser;
+	}
+
+	/**
+	 * Zadatak 1 - 1.6
+	 */
+	@PutMapping("/project/users/{id}")
+	public UserEntity editUser(RequestBody UserEntity)
+	{
+		
+		return null;
+		
+	}
+	
 }
