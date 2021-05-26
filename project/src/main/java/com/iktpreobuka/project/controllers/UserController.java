@@ -62,28 +62,39 @@ public class UserController {
 	@PostMapping("/project/users")
 	public UserEntity createUser(@RequestBody UserEntity createdUser) {
 
-		System.out.println("User: " + createdUser.getId() + " " +  createdUser.getFirst_name() + " " +  createdUser.getLast_name()
-				+ " " + createdUser.getUsername() + " " + createdUser.getPassword() + " "  + createdUser.getUserRole());
+		System.out.println("User: " + createdUser.getId() + " " + createdUser.getFirst_name() + " "
+				+ createdUser.getLast_name() + " " + createdUser.getUsername() + " " + createdUser.getPassword() + " "
+				+ createdUser.getUserRole());
 
-		//set the role as customer, regardless of what the role has been set in the request
-		//TODO - make this better!?
+		// set the role as customer, regardless of what the role has been set in the
+		// request
+		// TODO - make this better!?
 		createdUser.setUserRole(EUserRole.ROLE_CUSTOMER);
-		
+
 		getDB().add(createdUser);
-		
-		//returns the user
+
+		// returns the user
 		return createdUser;
 	}
 
 	/**
 	 * Zadatak 1 - 1.6
 	 */
-	@PutMapping("/project/users/{id}")
-	public UserEntity editUser(RequestBody UserEntity)
-	{
-		
-		return null;
-		
-	}
 	
+	//TODO check if this is correct
+	@PutMapping("/project/users/{id}")
+	public UserEntity editUser(@PathVariable int id, @RequestBody UserEntity editedUser) {
+		//changes the ID of the guy only
+		UserEntity newUser = new UserEntity(id, "PutTester", "Surname", "email", "uName123", "pWord123", EUserRole.ROLE_CUSTOMER);
+		for (UserEntity user : getDB()) {
+			if (user.getId() == newUser.getId()) {
+				user.setFirst_name(newUser.getFirst_name());
+				user.setLast_name(newUser.getLast_name());
+				user.setEmail(newUser.getEmail());
+				return newUser;
+			}
+			
+		}
+		return null;
+	}
 }
