@@ -77,13 +77,12 @@ public class UserController {
 	/**
 	 * Zadatak 1 - 1.6
 	 */
-	
-	//updates the user record based on ID
-	//does not change the password or the role
+
+	// updates the user record based on ID
+	// does not change the password or the role
 	@PutMapping("/project/users/{id}")
 	public UserEntity editUser(@PathVariable int id, @RequestBody UserEntity editedUser) {
-		
-		
+
 		for (UserEntity user : getDB()) {
 			if (user.getId() == editedUser.getId()) {
 				user.setFirst_name(editedUser.getFirst_name());
@@ -92,7 +91,23 @@ public class UserController {
 				user.setUsername(editedUser.getUsername());
 				return user;
 			}
-			
+
+		}
+		return null;
+	}
+
+	/**
+	 * Zadatak 1 - 1.7
+	 **/
+
+	@PutMapping("/project/users/{id}/role/{role}")
+	public UserEntity editUserRole(@PathVariable int id, @PathVariable EUserRole role) {
+		for (UserEntity user : getDB()) {
+			if (user.getId() == id) {
+				user.setUserRole(role);
+			}
+
+			return user;
 		}
 		return null;
 	}
