@@ -1,6 +1,5 @@
 package com.iktpreobuka.project.controllers;
 
-import java.awt.PageAttributes.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.project.entities.UserEntity;
@@ -68,7 +66,6 @@ public class UserController {
 
 		// set the role as customer, regardless of what the role has been set in the
 		// request
-		// TODO - make this better!?
 		createdUser.setUserRole(EUserRole.ROLE_CUSTOMER);
 
 		getDB().add(createdUser);
@@ -81,17 +78,19 @@ public class UserController {
 	 * Zadatak 1 - 1.6
 	 */
 	
-	//TODO check if this is correct
+	//updates the user record based on ID
+	//does not change the password or the role
 	@PutMapping("/project/users/{id}")
 	public UserEntity editUser(@PathVariable int id, @RequestBody UserEntity editedUser) {
-		//changes the ID of the guy only
-		UserEntity newUser = new UserEntity(id, "PutTester", "Surname", "email", "uName123", "pWord123", EUserRole.ROLE_CUSTOMER);
+		
+		
 		for (UserEntity user : getDB()) {
-			if (user.getId() == newUser.getId()) {
-				user.setFirst_name(newUser.getFirst_name());
-				user.setLast_name(newUser.getLast_name());
-				user.setEmail(newUser.getEmail());
-				return newUser;
+			if (user.getId() == editedUser.getId()) {
+				user.setFirst_name(editedUser.getFirst_name());
+				user.setLast_name(editedUser.getLast_name());
+				user.setEmail(editedUser.getEmail());
+				user.setUsername(editedUser.getUsername());
+				return user;
 			}
 			
 		}
