@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.project.entities.UserEntity;
@@ -105,10 +106,35 @@ public class UserController {
 		for (UserEntity user : getDB()) {
 			if (user.getId() == id) {
 				user.setUserRole(role);
+				return user;
+			} else {
+				return null;
 			}
 
-			return user;
 		}
 		return null;
+	}
+
+	/**
+	 * Zadatak 1 - 1.8
+	 * 
+	 */
+	
+	@PutMapping("/project/users/changePassword/{id}")
+	public UserEntity changePassword(@PathVariable int id, @RequestParam("password") String password,
+			@RequestParam("newPassword") String newPassword) {
+
+		for (UserEntity user : getDB()) {
+
+			if (user.getId() == id && user.getPassword().equals(password)) {
+				user.setPassword(newPassword);
+				return user;
+			}
+			else return null;
+
+		}
+
+		return null;
+
 	}
 }
