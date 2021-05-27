@@ -71,7 +71,7 @@ public class UserController {
 		// request
 		createdUser.setUserRole(EUserRole.ROLE_CUSTOMER);
 
-		//adding him to the list of users
+		// adding him to the list of users
 		getDB().add(createdUser);
 
 		// returns the user
@@ -110,8 +110,6 @@ public class UserController {
 			if (user.getId() == id) {
 				user.setUserRole(role);
 				return user;
-			} else {
-				return null;
 			}
 
 		}
@@ -156,22 +154,19 @@ public class UserController {
 
 		return null;
 	}
-	
+
 	/**
 	 * Zadatak 1 - 1.10
 	 */
 	@GetMapping("/project/users/by-username/{username}")
-	public UserEntity userByUsername(@PathVariable String username)
-	{
-		
+	public UserEntity userByUsername(@PathVariable String username) {
+
 		for (UserEntity user : getDB()) {
-			if(user.getUsername().equals(username))
-			{
+			if (user.getUsername().equals(username)) {
 				return user;
 			}
 		}
-		
-		
+
 		return null;
 	}
 
