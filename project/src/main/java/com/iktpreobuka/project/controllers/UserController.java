@@ -3,6 +3,8 @@ package com.iktpreobuka.project.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,12 +47,12 @@ public class UserController {
 	 * Zadatak 1 - 1.4
 	 */
 	@RequestMapping("/project/users/{id}")
-	public UserEntity getById(@PathVariable String id) {
+	public UserEntity getById(@PathVariable int id) {
 		for (UserEntity user : getDB()) {
-			if (user.getId() == Integer.parseInt(id))
+			if (user.getId() == id) {
 				return user;
-			else
-				return null;
+			}
+
 		}
 		return null;
 	}
@@ -69,6 +71,7 @@ public class UserController {
 		// request
 		createdUser.setUserRole(EUserRole.ROLE_CUSTOMER);
 
+		//adding him to the list of users
 		getDB().add(createdUser);
 
 		// returns the user
@@ -119,7 +122,7 @@ public class UserController {
 	 * Zadatak 1 - 1.8
 	 * 
 	 */
-	
+
 	@PutMapping("/project/users/changePassword/{id}")
 	public UserEntity changePassword(@PathVariable int id, @RequestParam("password") String password,
 			@RequestParam("newPassword") String newPassword) {
@@ -129,12 +132,47 @@ public class UserController {
 			if (user.getId() == id && user.getPassword().equals(password)) {
 				user.setPassword(newPassword);
 				return user;
-			}
-			else return null;
+			} else
+				return null;
 
 		}
 
 		return null;
 
 	}
+
+	/**
+	 * Zadatak 1 - 1.9
+	 */
+	@DeleteMapping("/project/users/{id}")
+	public UserEntity deleteUser(@PathVariable int id) {
+		for (UserEntity user : getDB()) {
+			if (user.getId() == id) {
+				getDB().remove(user);
+				return user;
+			}
+
+		}
+
+		return null;
+	}
+	
+	/**
+	 * Zadatak 1 - 1.10
+	 */
+	@GetMapping("/project/users/by-username/{username}")
+	public UserEntity userByUsername(@PathVariable String username)
+	{
+		
+		for (UserEntity user : getDB()) {
+			if(user.getUsername().equals(username))
+			{
+				return user;
+			}
+		}
+		
+		
+		return null;
+	}
+
 }
