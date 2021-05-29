@@ -1,0 +1,490 @@
+{
+	"info": {
+		"_postman_id": "1c9a1365-5b61-43c0-9a6e-6fff0b77e1c3",
+		"name": "Brains - Backend Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Task 1",
+			"item": [
+				{
+					"name": "1.4 - Search user by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.5 - Add users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 5,\r\n    \"first_name\": \"Ivan\",\r\n    \"last_name\": \"Don\",\r\n    \"username\": \"Plug\",\r\n    \"password\": \"Walk\",\r\n    \"email\": \"dimitrieski@uns.ac.rs\",\r\n    \"userRole\": \"ROLE_CUSTOMER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/project/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.6 - Edit user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"first_name\": \"Stan\",\r\n    \"last_name\": \"Marsh\",\r\n    \"username\": \"stanMa\",\r\n    \"password\": \"stanMarshPass\",\r\n    \"email\": \"d@uns.ac.rs\",\r\n    \"userRole\": \"ROLE_ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/project/users/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.7 - Change user roles",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/users/1/role/ROLE_SELLER",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"users",
+								"1",
+								"role",
+								"ROLE_SELLER"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.8 - Change Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"id\": 1,\r\n        \"first_name\": \"Vladimir\",\r\n        \"last_name\": \"Dimitrieski\",\r\n        \"username\": \"vladimir\",\r\n        \"password\": \"vladimir\",\r\n        \"email\": \"dimitrieski@uns.ac.rs\",\r\n        \"userRole\": \"ROLE_CUSTOMER\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/project/users/changePassword/1?password=vladimir&newPassword=5050505050501",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"users",
+								"changePassword",
+								"1"
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "vladimir"
+								},
+								{
+									"key": "newPassword",
+									"value": "5050505050501"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.9 - Delete by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8090/project/users/",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.10 - Get users by username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/users/by-username/vladimir",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"users",
+								"by-username",
+								"vladimir"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Requests for Task 1 - For testing and documentation purposes\n\nIncluded:\n1) Search user by ID\n2) Add users\n3) Edit user\n4) Change user role\n5) Change password\n6) Delete user by ID\n7) Get users by username"
+		},
+		{
+			"name": "Task 2",
+			"item": [
+				{
+					"name": "2.3 - Return all categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/categories/",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.4 - Add category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 6,\r\n        \"categoyName\": \"movies\",\r\n        \"categoryDescription\": \"movies\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/project/categories/",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.5 - Edit category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"categoyName\": \"movies\",\r\n        \"categoryDescription\": \"description 1\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/project/categories/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.6 - Delete category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/categories/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.7 - Return category by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/categories/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Task 3",
+			"item": [
+				{
+					"name": "3.3 - Return all offers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/offers",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"offers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.4 - Add offer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 54,\r\n        \"offerName\": \"Testing \",\r\n        \"offerDescription\": \"Enjoy!!!\",\r\n        \"offerCreated\": \"2021-05-27T19:04:53.810+00:00\",\r\n        \"offerExpires\": \"2021-06-01T19:04:53.810+00:00\",\r\n        \"regularPrice\": 123123.0,\r\n        \"actionPrice\": 43.0,\r\n        \"imagePath\": \" \",\r\n        \"availableOffers\": 5,\r\n        \"boughtOffers\": 6,\r\n        \"offerStatus\": \"WAIT_FOR_APPROVING\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/project/offers/",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"offers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.5 - Edit offers",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"offerName\": \"Man united tickets\",\r\n        \"offerDescription\": \"Enjoy!!!\",\r\n        \"offerCreated\": \"2021-05-27T19:19:14.578+00:00\",\r\n        \"offerExpires\": \"2021-06-01T19:19:14.578+00:00\",\r\n        \"regularPrice\": 123131.0,\r\n        \"actionPrice\": 4342.0,\r\n        \"imagePath\": \" \",\r\n        \"availableOffers\": 5,\r\n        \"boughtOffers\": 3,\r\n        \"offerStatus\": \"WAIT_FOR_APPROVING\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/project/offers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"offers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.6 - Delete offer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/offers/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"offers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.7 - Get offer by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/offers/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"offers",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.8 - Change offer status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/offers/changeOffer/2/status/APPROVED",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"offers",
+								"changeOffer",
+								"2",
+								"status",
+								"APPROVED"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.9 - Get offers by price (min - max)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/project/offers/findByPrice/10000/and/20000",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"project",
+								"offers",
+								"findByPrice",
+								"10000",
+								"and",
+								"20000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
