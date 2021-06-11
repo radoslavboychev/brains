@@ -1,1 +1,0 @@
-git add *; git commit -m "Thank You for Choosing to Learn from in28Minutes"; git push;
