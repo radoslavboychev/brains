@@ -1,18 +1,48 @@
 /**
- * 
+ * T3 Projekat Zadaci
+ * Zadatak 1.1
  */
 package com.iktpreobuka.project.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class UserEntity {
 
 	// attributes
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private int id;
-	private String first_name, last_name, username, password, email;
+	
+	@Column(name = "firstName")
+	private String first_name;
+	
+	@Column(name = "lastName")
+	private String last_name;
+	
+	@Column(name = "username")
+	private String username;
+	
+	@Column(name = "password")
+	private String password;
+	
+	@Column(name = "email")
+	private String email;
 
 	public enum EUserRole {
 		ROLE_CUSTOMER, ROLE_ADMIN, ROLE_SELLER
 	}
 
+	@Column(name = "userRole")
 	//enum user roles
 	private EUserRole userRole;
 

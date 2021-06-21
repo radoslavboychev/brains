@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.project.entities.OfferEntity;
 import com.iktpreobuka.project.entities.OfferEntity.EOfferStatus;
+import com.iktpreobuka.project.repositories.OfferRepository;
 
 /**
  * 
@@ -27,7 +29,7 @@ import com.iktpreobuka.project.entities.OfferEntity.EOfferStatus;
 public class OfferController {
 
 	/**
-	 * 
+	 * yes
 	 * Zadatak 3.3
 	 */
 
@@ -56,6 +58,12 @@ public class OfferController {
 	}
 
 	/**
+	 * T3 - 1.3 Zadatak
+	 */
+	@Autowired
+	private OfferRepository offerRepository;
+
+	/**
 	 * Zadatak 3 - 3.4
 	 */
 	@PostMapping("/project/offers")
@@ -66,7 +74,7 @@ public class OfferController {
 				+ createdOffer.getAvailableOffers() + " " + createdOffer.getBoughtOffers() + " "
 				+ createdOffer.getOfferStatus());
 
-		getDB().add(createdOffer);
+		offerRepository.save(createdOffer);
 		return createdOffer;
 	}
 
@@ -141,16 +149,16 @@ public class OfferController {
 	/**
 	 * Zadatak 3 - 3.9
 	 */
-	
-	//if there isnt any action price, we check by normal price
+
+	// if there isnt any action price, we check by normal price
 	@GetMapping("/project/offers/findByPrice/{lowerPrice}/and/{upperPrice}")
 	public OfferEntity findByPrice(@PathVariable double lowerPrice, @PathVariable double upperPrice) {
 
 		for (OfferEntity offer : getDB()) {
-			//check action price first
+			// check action price first
 			if (offer.getActionPrice() >= lowerPrice && offer.getActionPrice() <= upperPrice) {
 				return offer;
-				//if there's no action price
+				// if there's no action price
 			} else if (offer.getActionPrice() == 0) {
 				if (offer.getRegularPrice() >= lowerPrice && offer.getRegularPrice() <= upperPrice) {
 					return offer;
@@ -158,7 +166,6 @@ public class OfferController {
 					return null;
 			}
 		}
-		
 
 		return null;
 

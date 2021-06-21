@@ -2,31 +2,59 @@ package com.iktpreobuka.project.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * 
  * Zadatak 3 - 3.1
  *
  */
-
+@Entity
 public class OfferEntity {
 
 	// attributes
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private int id;
+
+	@Column(name = "offerName")
 	private String offerName;
+
+	@Column(name = "offerDescription")
 	private String offerDescription;
+
+	@Column(name = "offerCreated")
 	private Date offerCreated;
+
+	@Column(name = "offerExpires")
 	private Date offerExpires;
+
+	@Column(name = "regularPrice")
 	private double regularPrice;
+
+	@Column(name = "actionPrice")
 	private double actionPrice;
+
+	@Column(name = "imagePath")
 	private String imagePath;
+
+	@Column(name = "availableOffers")
 	private int availableOffers;
+
+	@Column(name = "boughtOffers")
 	private int boughtOffers;
 
 	public enum EOfferStatus {
 		WAIT_FOR_APPROVING, APPROVED, DECLINED, EXPIRED
 	}
 
+	@Column(name = "offerStatus")
 	private EOfferStatus offerStatus;
 
 	// constructor
@@ -61,6 +89,9 @@ public class OfferEntity {
 		if (boughtOffers > availableOffers) {
 			System.out.println("Error. Bought offers are more than available offers!");
 		}
+	}
+
+	public OfferEntity() {
 	}
 
 	// getters and setters
