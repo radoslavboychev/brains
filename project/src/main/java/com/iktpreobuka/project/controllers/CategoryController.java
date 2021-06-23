@@ -1,120 +1,85 @@
 package com.iktpreobuka.project.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.iktpreobuka.project.entities.CategoryEntity;
 import com.iktpreobuka.project.repositories.CategoryRepository;
 
-/**
- * 
- * Zadatak 2 - 2.3 T3 - Zadatak 1 - 1.3
- */
-
 @RestController
+@RequestMapping("/api/v1/project/categories")
 public class CategoryController {
-	@RequestMapping("/project/categories")
-	public Iterable<CategoryEntity> getDB() {
 
-		return categoryRepository.findAll();
-
-		// This is the old code from the previous week
-//		List<CategoryEntity> categories = new ArrayList<>();
-//
-//		CategoryEntity c1 = new CategoryEntity(1, "music", "description 1");
-//		CategoryEntity c2 = new CategoryEntity(2, "food", "description 2");
-//		CategoryEntity c3 = new CategoryEntity(3, "entertainment", "description 3");
-//
-//		categories.add(c1);
-//		categories.add(c2);
-//		categories.add(c3);
-//
-//		return categories;
-	}
-
-	/**
-	 * T3 - Zadatak 1.3
-	 */
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-	/**
-	 * 
-	 * Zadatak 2 - 2.4
-	 *
-	 */
-	@PostMapping("/project/categories")
-	public CategoryEntity addCategory(@RequestBody CategoryEntity addedCategory) {
+	// post mapping
+	// T2 2.4
+	@RequestMapping(method = RequestMethod.POST)
+	public CategoryEntity add(@RequestBody ObjectNode objectNode) {
 
-		System.out.println("Category" + addedCategory.getId() + " " + addedCategory.getCategoyName() + " "
-				+ addedCategory.getCategoryDescription());
+		CategoryEntity newCategory = new CategoryEntity(objectNode.get("name").asText(),
+				objectNode.get("description").asText());
 
-		System.out.println("Category added!\n");
+		categoryRepository.save(newCategory);
 
-		// add it to the db list
-		// T3 edited
-		categoryRepository.save(addedCategory);
-
-		return addedCategory;
+		return newCategory;
 	}
 
-	/**
-	 * Zadatak 2 - 2.5
-	 */
-	@PutMapping("/project/categories/{id}")
-	public CategoryEntity editCategory(@PathVariable int id, @RequestBody CategoryEntity editedCategory) {
-		for (CategoryEntity cat : getDB()) {
-			if (cat.getId() == editedCategory.getId()) {
-				cat.setId(editedCategory.getId());
-				cat.setCategoyName(editedCategory.getCategoyName());
-				cat.setCategoryDescription(editedCategory.getCategoryDescription());
-				
-				//T3 edited
-				categoryRepository.save(editedCategory);
-				return cat;
-			}
-		}
-
-		return null;
-
+	// get mapping
+	// T2 2.3
+	@RequestMapping(method = RequestMethod.GET)
+	public List<CategoryEntity> getAll() {
+		return (List<CategoryEntity>) categoryRepository.findAll();
 	}
 
-	/**
-	 * Zadatak 2 - 2.6
-	 */
-	@DeleteMapping("/project/categories/{id}")
-	public CategoryEntity deleteCategory(@PathVariable int id) {
-		for (CategoryEntity cat : getDB()) {
-			if (cat.getId() == id) {
-				
-				//T3 Edited
-				categoryRepository.delete(cat);
-				return cat;
-			}
-		}
-		return null;
+	// T2 2.7
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	public CategoryEntity getById(@PathVariable Integer id) {
+
+		return categoryRepository.findById(id).orElse(null);
 	}
 
-	/**
-	 * Zadatak 2 - 2.7
-	 */
-	@GetMapping("/project/categories/{id}")
-	public CategoryEntity getCategoryByID(@PathVariable int id) {
-		for (CategoryEntity cat : getDB()) {
-			if (cat.getId() == id) {
-				
-				categoryRepository.save(cat);
-				return cat;
-			}
-		}
-		return null;
+	// put mapping
+	// T2 2.5
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+	public CategoryEntity changeCategory(@PathVariable Integer id, @RequestBody ObjectNode objectNode) {
+
+		CategoryEntity category = categoryRepository.findById(id).orElse(null);
+		if (category == null)
+			return null;
+
+		String name = objectNode.get("name").asText();
+		String description = objectNode.get("description").asText();
+
+		if (name != null)
+			category.setName(name);
+		if (description != null)
+			category.setDescription(description);
+
+		categoryRepository.save(category);
+
+		return category;
 	}
 
+	// delete mapping
+	// T2 2.6
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public CategoryEntity delete(@PathVariable Integer id) {
+
+		CategoryEntity category = categoryRepository.findById(id).orElse(null);
+		if (category == null)
+			return null;
+
+		categoryRepository.delete(category);
+
+		return category;
+	}
 }

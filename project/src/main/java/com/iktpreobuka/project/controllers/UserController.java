@@ -1,173 +1,137 @@
 package com.iktpreobuka.project.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.iktpreobuka.project.entities.UserEntity;
-import com.iktpreobuka.project.entities.UserEntity.EUserRole;
+import com.iktpreobuka.project.enums.Role;
+import com.iktpreobuka.project.repositories.UserRepository;
 
 @RestController
-
+@RequestMapping("/api/v1/project/users")
 public class UserController {
 
-	/**
-	 * Zadatak 1 - 1.3
-	 */
-	@RequestMapping("/project/users")
-	protected List<UserEntity> getDB() {
-		List<UserEntity> users = new ArrayList<>();
+	@Autowired
+	private UserRepository userRepository;
 
-		UserEntity u1 = new UserEntity(1, "Vladimir", "Dimitrieski", "dimitrieski@uns.ac.rs", "vladimir", "vladimir",
-				EUserRole.ROLE_CUSTOMER);
+	// post mapping
+	// T2 1.5
+	@RequestMapping(method = RequestMethod.POST)
+	public UserEntity add(@RequestBody ObjectNode objectNode) {
 
-		UserEntity u2 = new UserEntity(2, "Milan", "Celikovic", "milancel@uns.ac.rs", "milan", "milan",
-				EUserRole.ROLE_CUSTOMER);
+		UserEntity newUser = new UserEntity(objectNode.get("firstName").asText(), objectNode.get("lastName").asText(),
+				objectNode.get("username").asText(), objectNode.get("password").asText(),
+				objectNode.get("email").asText(), Role.fromString(objectNode.get("userRole").asText()));
 
-		UserEntity u3 = new UserEntity(3, "Nebojsa", "Horvat", "horva.n@uncs.ac.rs", "nebojsa", "nebojsa",
-				EUserRole.ROLE_CUSTOMER);
+		userRepository.save(newUser);
 
-		users.add(u1);
-		users.add(u2);
-		users.add(u3);
-		return users;
-
+		return newUser;
 	}
 
-	/**
-	 * Zadatak 1 - 1.4
-	 */
-	@RequestMapping("/project/users/{id}")
-	public UserEntity getById(@PathVariable int id) {
-		for (UserEntity user : getDB()) {
-			if (user.getId() == id) {
-				return user;
-			}
-
-		}
-		return null;
+	// get mapping
+	// T2 1.3
+	@RequestMapping(method = RequestMethod.GET)
+	public List<UserEntity> getAllUsers() {
+		return (List<UserEntity>) userRepository.findAll();
 	}
 
-	/**
-	 * Zadatak 1 - 1.5
-	 */
-	@PostMapping("/project/users")
-	public UserEntity createUser(@RequestBody UserEntity createdUser) {
-
-		System.out.println("User: " + createdUser.getId() + " " + createdUser.getFirst_name() + " "
-				+ createdUser.getLast_name() + " " + createdUser.getUsername() + " " + createdUser.getPassword() + " "
-				+ createdUser.getUserRole());
-
-		// set the role as customer, regardless of what the role has been set in the
-		// request
-		createdUser.setUserRole(EUserRole.ROLE_CUSTOMER);
-
-		// adding him to the list of users
-		getDB().add(createdUser);
-
-		// returns the user
-		return createdUser;
+	// T2 1.4
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	public UserEntity getById(@PathVariable Integer id) {
+		return userRepository.findById(id).orElse(null);
 	}
 
-	/**
-	 * Zadatak 1 - 1.6
-	 */
-
-	// updates the user record based on ID
-	// does not change the password or the role
-	@PutMapping("/project/users/{id}")
-	public UserEntity editUser(@PathVariable int id, @RequestBody UserEntity editedUser) {
-
-		for (UserEntity user : getDB()) {
-			if (user.getId() == editedUser.getId()) {
-				user.setFirst_name(editedUser.getFirst_name());
-				user.setLast_name(editedUser.getLast_name());
-				user.setEmail(editedUser.getEmail());
-				user.setUsername(editedUser.getUsername());
-				return user;
-			}
-
-		}
-		return null;
+	// T2 1.10
+	@RequestMapping(method = RequestMethod.GET, value = "/by-username/{username}")
+	public UserEntity getByUsername(@PathVariable String username) {
+		return userRepository.findByUsername(username);
 	}
 
-	/**
-	 * Zadatak 1 - 1.7
-	 **/
+	// put mapping
+	// T2 1.6
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+	public UserEntity changeUser(@PathVariable Integer id, @RequestBody ObjectNode objectNode) {
 
-	@PutMapping("/project/users/{id}/role/{role}")
-	public UserEntity editUserRole(@PathVariable int id, @PathVariable EUserRole role) {
-		for (UserEntity user : getDB()) {
-			if (user.getId() == id) {
-				user.setUserRole(role);
-				return user;
-			}
+		UserEntity user = userRepository.findById(id).orElse(null);
+		if (user == null)
+			return null;
 
-		}
-		return null;
+		String firstName = objectNode.get("firstName").asText();
+		String lastName = objectNode.get("lastName").asText();
+		String username = objectNode.get("username").asText();
+		String password = objectNode.get("password").asText();
+		String email = objectNode.get("email").asText();
+		Role role = Role.fromString(objectNode.get("userRole").asText());
+
+		if (firstName != null)
+			user.setFirstName(firstName);
+		if (lastName != null)
+			user.setLastName(lastName);
+		if (username != null)
+			user.setUsername(username);
+		if (password != null)
+			user.setPassword(password);
+		if (email != null)
+			user.setEmail(email);
+		if (role != null)
+			user.setUserRole(role);
+
+		userRepository.save(user);
+
+		return user;
 	}
 
-	/**
-	 * Zadatak 1 - 1.8
-	 * 
-	 */
+	// T2 1.7
+	@RequestMapping(method = RequestMethod.PUT, value = "/change/{id}/role")
+	public UserEntity changeRole(@PathVariable Integer id, @RequestParam String role) {
 
-	@PutMapping("/project/users/changePassword/{id}")
-	public UserEntity changePassword(@PathVariable int id, @RequestParam("password") String password,
-			@RequestParam("newPassword") String newPassword) {
+		UserEntity user = userRepository.findById(id).orElse(null);
+		if (user == null)
+			return null;
 
-		for (UserEntity user : getDB()) {
+		user.setUserRole(Role.fromString(role));
+		userRepository.save(user);
 
-			if (user.getId() == id && user.getPassword().equals(password)) {
-				user.setPassword(newPassword);
-				return user;
-			} else
-				return null;
-
-		}
-
-		return null;
-
+		return user;
 	}
 
-	/**
-	 * Zadatak 1 - 1.9
-	 */
-	@DeleteMapping("/project/users/{id}")
-	public UserEntity deleteUser(@PathVariable int id) {
-		for (UserEntity user : getDB()) {
-			if (user.getId() == id) {
-				getDB().remove(user);
-				return user;
-			}
+	// T2 1.8
+	@RequestMapping(method = RequestMethod.PUT, value = "/changePassword/{id}")
+	public UserEntity changePassword(@PathVariable Integer id, @RequestParam String op, @RequestParam String np) {
 
-		}
+		UserEntity user = userRepository.findById(id).orElse(null);
 
-		return null;
+		if (user == null)
+			return null;
+
+		if (user.getPassword().equals(op))
+			user.setPassword(np);
+
+		userRepository.save(user);
+
+		return user;
 	}
 
-	/**
-	 * Zadatak 1 - 1.10
-	 */
-	@GetMapping("/project/users/by-username/{username}")
-	public UserEntity userByUsername(@PathVariable String username) {
+	//delete mapping
 
-		for (UserEntity user : getDB()) {
-			if (user.getUsername().equals(username)) {
-				return user;
-			}
-		}
+	// T2 1.9
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public UserEntity delete(@PathVariable Integer id) {
 
-		return null;
+		UserEntity user = userRepository.findById(id).orElse(null);
+		if (user == null)
+			return null;
+
+		userRepository.delete(user);
+
+		return user;
 	}
-
 }

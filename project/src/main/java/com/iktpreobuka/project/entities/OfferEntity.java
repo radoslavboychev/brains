@@ -1,186 +1,225 @@
 package com.iktpreobuka.project.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
-/**
- * 
- * Zadatak 3 - 3.1
- *
- */
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.iktpreobuka.project.enums.OfferType;
+
 @Entity
 public class OfferEntity {
 
-	// attributes
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private int id;
+	protected Integer id;
 
-	@Column(name = "offerName")
-	private String offerName;
+	@Column(nullable = false)
+	protected String name;
 
-	@Column(name = "offerDescription")
-	private String offerDescription;
+	@Column(nullable = false)
+	protected String description;
 
-	@Column(name = "offerCreated")
-	private Date offerCreated;
+	@Column(nullable = false)
+	protected Date created;
 
-	@Column(name = "offerExpires")
-	private Date offerExpires;
+	@Column(nullable = false)
+	protected Date expires;
 
-	@Column(name = "regularPrice")
-	private double regularPrice;
+	@Column(nullable = false)
+	protected Double regPrice;
 
-	@Column(name = "actionPrice")
-	private double actionPrice;
+	@Column(nullable = false)
+	protected Double actPrice;
 
-	@Column(name = "imagePath")
-	private String imagePath;
+	@Column(nullable = false)
+	protected String imgPath;
 
-	@Column(name = "availableOffers")
-	private int availableOffers;
+	@Column(nullable = false)
+	protected Integer numAvailable;
 
-	@Column(name = "boughtOffers")
-	private int boughtOffers;
+	@Column(nullable = false)
+	protected Integer numBought;
 
-	public enum EOfferStatus {
-		WAIT_FOR_APPROVING, APPROVED, DECLINED, EXPIRED
-	}
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	protected OfferType type;
 
-	@Column(name = "offerStatus")
-	private EOfferStatus offerStatus;
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "category")
+	private CategoryEntity category;
 
-	// constructor
-	/**
-	 * @param id
-	 * @param offerName
-	 * @param offerDescription
-	 * @param offerCreated
-	 * @param offerExpires
-	 * @param regularPrice
-	 * @param actionPrice
-	 * @param imagePath
-	 * @param availableOffers
-	 * @param boughtOffers
-	 * @param offerStatus
-	 */
-	public OfferEntity(int id, String offerName, String offerDescription, Date offerCreated, Date offerExpires,
-			double regularPrice, double actionPrice, String imagePath, int availableOffers, int boughtOffers,
-			EOfferStatus offerStatus) {
-		super();
-		this.id = id;
-		this.offerName = offerName;
-		this.offerDescription = offerDescription;
-		this.offerCreated = offerCreated;
-		this.offerExpires = offerExpires;
-		this.regularPrice = regularPrice;
-		this.actionPrice = actionPrice;
-		this.imagePath = imagePath;
-		this.availableOffers = availableOffers;
-		this.boughtOffers = boughtOffers;
-		this.offerStatus = offerStatus;
-		if (boughtOffers > availableOffers) {
-			System.out.println("Error. Bought offers are more than available offers!");
-		}
-	}
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "user")
+	private UserEntity user;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
+	protected List<BillEntity> bills = new ArrayList<BillEntity>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
+	protected List<VoucherEntity> vouchers = new ArrayList<VoucherEntity>();
+
+	@Version
+	private Integer version;
 
 	public OfferEntity() {
 	}
 
-	// getters and setters
-	public int getId() {
+	public OfferEntity(String name, String desc, Date created, Date expires, double regPrice, double actPrice,
+			String imgPath, int numAvailable, int numBought, OfferType type) {
+		this.name = name;
+		this.description = desc;
+		this.created = created;
+		this.expires = expires;
+		this.regPrice = regPrice;
+		this.actPrice = actPrice;
+		this.imgPath = imgPath;
+		this.numAvailable = numAvailable;
+		this.numBought = numBought;
+		this.type = type;
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public String getName() {
+		return name;
+	}
+
+	public String getDesc() {
+		return description;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public Date getExpires() {
+		return expires;
+	}
+
+	public Double getRegPrice() {
+		return regPrice;
+	}
+
+	public Double getActPrice() {
+		return actPrice;
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public Integer getNumAvailable() {
+		return numAvailable;
+	}
+
+	public Integer getNumBought() {
+		return numBought;
+	}
+
+	public OfferType getType() {
+		return type;
+	}
+
+	public CategoryEntity getCategory() {
+		return category;
+	}
+
+	public UserEntity getUser() {
+		return user;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public List<BillEntity> getBills() {
+		return bills;
+	}
+
+	public List<VoucherEntity> getVouchers() {
+		return vouchers;
+	}
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getOfferName() {
-		return offerName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setOfferName(String offerName) {
-		this.offerName = offerName;
+	public void setDesc(String desc) {
+		this.description = desc;
 	}
 
-	public String getOfferDescription() {
-		return offerDescription;
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
-	public void setOfferDescription(String offerDescription) {
-		this.offerDescription = offerDescription;
+	public void setExpires(Date expires) {
+		this.expires = expires;
 	}
 
-	public Date getOfferCreated() {
-		return offerCreated;
+	public void setRegPrice(Double regPrice) {
+		this.regPrice = regPrice;
 	}
 
-	public void setOfferCreated(Date offerCreated) {
-		this.offerCreated = offerCreated;
+	public void setActPrice(Double actPrice) {
+		this.actPrice = actPrice;
 	}
 
-	public Date getOfferExpires() {
-		return offerExpires;
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
-	public void setOfferExpires(Date offerExpires) {
-		this.offerExpires = offerExpires;
+	public void setNumAvailable(Integer numAvailable) {
+		this.numAvailable = numAvailable;
 	}
 
-	public double getRegularPrice() {
-		return regularPrice;
+	public void setNumBought(Integer numBought) {
+		this.numBought = numBought;
 	}
 
-	public void setRegularPrice(float regularPrice) {
-		this.regularPrice = regularPrice;
+	public void setType(OfferType type) {
+		this.type = type;
 	}
 
-	public double getActionPrice() {
-		return actionPrice;
+	public void setCategory(CategoryEntity category) {
+		this.category = category;
 	}
 
-	public void setActionPrice(float actionPrice) {
-		this.actionPrice = actionPrice;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
-	public String getImagePath() {
-		return imagePath;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setBills(List<BillEntity> bills) {
+		this.bills = bills;
 	}
 
-	public int getAvailableOffers() {
-		return availableOffers;
+	public void setVouchers(List<VoucherEntity> vouchers) {
+		this.vouchers = vouchers;
 	}
-
-	public void setAvailableOffers(int availableOffers) {
-		this.availableOffers = availableOffers;
-	}
-
-	public int getBoughtOffers() {
-		return boughtOffers;
-	}
-
-	public void setBoughtOffers(int boughtOffers) {
-		this.boughtOffers = boughtOffers;
-	}
-
-	public EOfferStatus getOfferStatus() {
-		return offerStatus;
-	}
-
-	public void setOfferStatus(EOfferStatus offerStatus) {
-		this.offerStatus = offerStatus;
-	}
-
 }

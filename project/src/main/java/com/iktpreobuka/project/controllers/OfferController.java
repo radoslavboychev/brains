@@ -1,173 +1,186 @@
 package com.iktpreobuka.project.controllers;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.iktpreobuka.project.entities.CategoryEntity;
 import com.iktpreobuka.project.entities.OfferEntity;
-import com.iktpreobuka.project.entities.OfferEntity.EOfferStatus;
+import com.iktpreobuka.project.entities.UserEntity;
+import com.iktpreobuka.project.enums.OfferType;
+import com.iktpreobuka.project.enums.Role;
+import com.iktpreobuka.project.repositories.CategoryRepository;
 import com.iktpreobuka.project.repositories.OfferRepository;
+import com.iktpreobuka.project.repositories.UserRepository;
+import com.iktpreobuka.project.utils.DateConverter;
 
-/**
- * 
- * Zadatak 3.2
- *
- */
 @RestController
-
+@RequestMapping("/api/v1/project/offers")
 public class OfferController {
 
-	/**
-	 * yes
-	 * Zadatak 3.3
-	 */
-
-	@RequestMapping("/project/offers")
-	private List<OfferEntity> getDB() {
-		List<OfferEntity> offers = new ArrayList<>();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
-		cal.add(Calendar.DATE, 5);
-
-		OfferEntity o1 = new OfferEntity(1, "2 tickets for Killers concert", "Enjoy!!!", new Date(), cal.getTime(),
-				100000.00, 6500.00, " ", 10, 0, EOfferStatus.WAIT_FOR_APPROVING);
-
-		OfferEntity o2 = new OfferEntity(2, "VIVAX 24LE76T2", "Don't miss this fantastic offer!", new Date(),
-				cal.getTime(), 200000.00, 16500.00, " ", 4, 0, EOfferStatus.WAIT_FOR_APPROVING);
-
-		OfferEntity o3 = new OfferEntity(3, "Dinner for two in Aqua Doria", "Excellent offer", new Date(),
-				cal.getTime(), 6000.00, 3500.00, " ", 4, 0, EOfferStatus.WAIT_FOR_APPROVING);
-
-		offers.add(o1);
-		offers.add(o2);
-		offers.add(o3);
-
-		return offers;
-
-	}
-
-	/**
-	 * T3 - 1.3 Zadatak
-	 */
 	@Autowired
 	private OfferRepository offerRepository;
 
-	/**
-	 * Zadatak 3 - 3.4
-	 */
-	@PostMapping("/project/offers")
-	public OfferEntity createOffer(@RequestBody OfferEntity createdOffer) {
-		System.out.println("Offer: " + createdOffer.getId() + " " + createdOffer.getOfferName() + " "
-				+ createdOffer.getOfferDescription() + " " + createdOffer.getOfferCreated() + " "
-				+ createdOffer.getOfferCreated() + " " + createdOffer.getOfferExpires() + " "
-				+ createdOffer.getAvailableOffers() + " " + createdOffer.getBoughtOffers() + " "
-				+ createdOffer.getOfferStatus());
+	@Autowired
+	private UserRepository userRepository;
 
-		offerRepository.save(createdOffer);
-		return createdOffer;
+	@Autowired
+	private CategoryRepository categoryRepository;
+
+	//post mapping
+	// T3 2.3
+	@RequestMapping(method = RequestMethod.POST, value = "/{categoryId}/seller/{sellerId}")
+	public OfferEntity add(@PathVariable Integer categoryId, @PathVariable Integer sellerId,
+			@RequestBody ObjectNode objectNode) {
+
+		OfferEntity newOffer = new OfferEntity(objectNode.get("name").asText(), objectNode.get("description").asText(),
+				Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now().plusDays(10)),
+				Double.parseDouble(objectNode.get("regPrice").asText().trim()),
+				Double.parseDouble(objectNode.get("actPrice").asText().trim()), objectNode.get("imgPath").asText(),
+				Integer.parseInt(objectNode.get("numAvailable").asText().trim()),
+				Integer.parseInt(objectNode.get("numBought").asText().trim()),
+				OfferType.fromString(objectNode.get("offerType").asText()));
+
+		UserEntity user = userRepository.findById(sellerId).orElse(null);
+		CategoryEntity category = categoryRepository.findById(categoryId).orElse(null);
+
+		if (user == null || user.getUserRole() != Role.ROLE_SELLER || category == null)
+			return null;
+
+		newOffer.setUser(user);
+		newOffer.setCategory(category);
+
+		offerRepository.save(newOffer);
+
+		return newOffer;
 	}
 
-	/**
-	 * Zadatak 3 - 3.5
-	 */
-	@PutMapping("/project/offers/{id}")
-	public OfferEntity ediOffer(@PathVariable int id, @RequestBody OfferEntity editedOffer) {
-
-		for (OfferEntity offer : getDB()) {
-			if (offer.getId() == editedOffer.getId()) {
-				offer.setId(editedOffer.getId());
-				offer.setOfferName(editedOffer.getOfferName());
-				offer.setOfferDescription(editedOffer.getOfferDescription());
-				offer.setOfferCreated(editedOffer.getOfferCreated());
-				offer.setOfferExpires(editedOffer.getOfferExpires());
-				offer.setAvailableOffers(editedOffer.getAvailableOffers());
-				offer.setBoughtOffers(editedOffer.getBoughtOffers());
-				// offer.setOfferStatus(editedOffer.getOfferStatus());
-
-				return editedOffer;
-			}
-		}
-		return null;
+	//get mapping
+	// T2 3.3
+	@RequestMapping(method = RequestMethod.GET)
+	public List<OfferEntity> getAllOffers() {
+		return (List<OfferEntity>) offerRepository.findAll();
 	}
 
-	/**
-	 * Zadatak 3 - 3.6
-	 */
-	@DeleteMapping("/project/offers/{id}")
-	public OfferEntity deleteOffer(@PathVariable int id) {
-		for (OfferEntity offer : getDB()) {
+	// T2 3.7
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	public OfferEntity getById(@PathVariable Integer id) {
 
-			if (offer.getId() == id) {
-				getDB().remove(id);
-				return offer;
-			}
-		}
-		return null;
+		return offerRepository.findById(id).orElse(null);
 	}
 
-	/**
-	 * Zadatak 3 - 3.7
-	 */
-	@GetMapping("/project/offers/{id}")
-	public OfferEntity getOfferByID(@PathVariable int id) {
-		for (OfferEntity offer : getDB()) {
-			if (offer.getId() == id) {
-				return offer;
-			}
-		}
-		return null;
+	// T2 3.9
+	@RequestMapping(method = RequestMethod.GET, value = "/findByPrice/{lowerPrice}/and/{upperPrice}")
+	public List<OfferEntity> getByRange(@PathVariable Integer lowerPrice, @PathVariable Integer upperPrice) {
+
+		List<OfferEntity> offers = (List<OfferEntity>) offerRepository.findAll();
+
+		return offers.stream().filter(o -> lowerPrice <= o.getActPrice() && o.getActPrice() < upperPrice)
+				.collect(Collectors.toList());
 	}
 
-	/**
-	 * Zadatak 3 - 3.8
-	 */
-	@PutMapping("/project/offers/changeOffer/{id}/status/{status}")
-	public OfferEntity changeOfferStatus(@PathVariable int id, @PathVariable EOfferStatus status) {
-		for (OfferEntity offer : getDB()) {
-			if (offer.getId() == id) {
+	//put mapping
+	// T2 3.5 - Edited in T3
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/{categoryId}/seller/{sellerId}")
+	public OfferEntity changeOffer(@PathVariable Integer id, @PathVariable Integer categoryId,
+			@PathVariable Integer sellerId, @RequestBody ObjectNode objectNode) {
 
-				offer.setOfferStatus(status);
-				return offer;
-			}
-		}
+		OfferEntity offer = offerRepository.findById(id).orElse(null);
+		CategoryEntity category = categoryRepository.findById(categoryId).orElse(null);
+		UserEntity seller = userRepository.findById(sellerId).orElse(null);
 
-		return null;
+		if (offer == null || category == null || seller == null || seller.getUserRole() != Role.ROLE_SELLER)
+			return null;
 
+		String name = objectNode.get("name").asText();
+		String desc = objectNode.get("description").asText();
+		Date created = Date.valueOf(objectNode.get("created").asText());
+		Date expires = Date.valueOf(objectNode.get("expires").asText());
+		double regPrice = Double.parseDouble(objectNode.get("regPrice").asText().trim());
+		double actPrice = Double.parseDouble(objectNode.get("actPrice").asText().trim());
+		String imgPath = objectNode.get("imgPath").asText();
+		int numAvailable = Integer.parseInt(objectNode.get("numAvailable").asText().trim());
+		int numBought = Integer.parseInt(objectNode.get("numBought").asText().trim());
+		OfferType type = OfferType.fromString(objectNode.get("offerType").asText().trim());
+
+		if (name != null)
+			offer.setName(name);
+		if (desc != null)
+			offer.setDesc(desc);
+		if (created != null)
+			offer.setCreated(created);
+		if (expires != null)
+			offer.setExpires(expires);
+		offer.setRegPrice(regPrice);
+		offer.setActPrice(actPrice);
+		if (imgPath != null)
+			offer.setImgPath(imgPath);
+		offer.setNumAvailable(numAvailable);
+		offer.setNumBought(numBought);
+		if (type != null)
+			offer.setType(type);
+
+		offer.setCategory(category);
+		offer.setUser(seller);
+
+		offerRepository.save(offer);
+
+		return offer;
 	}
 
-	/**
-	 * Zadatak 3 - 3.9
-	 */
+	// T2 3.8
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/type")
+	public OfferEntity changeType(@PathVariable Integer id, @RequestParam String type) {
 
-	// if there isnt any action price, we check by normal price
-	@GetMapping("/project/offers/findByPrice/{lowerPrice}/and/{upperPrice}")
-	public OfferEntity findByPrice(@PathVariable double lowerPrice, @PathVariable double upperPrice) {
+		OfferEntity offer = offerRepository.findById(id).orElse(null);
+		if (offer == null)
+			return null;
 
-		for (OfferEntity offer : getDB()) {
-			// check action price first
-			if (offer.getActionPrice() >= lowerPrice && offer.getActionPrice() <= upperPrice) {
-				return offer;
-				// if there's no action price
-			} else if (offer.getActionPrice() == 0) {
-				if (offer.getRegularPrice() >= lowerPrice && offer.getRegularPrice() <= upperPrice) {
-					return offer;
-				} else
-					return null;
-			}
-		}
+		offer.setType(OfferType.fromString(type));
+		offerRepository.save(offer);
 
-		return null;
+		return offer;
+	}
 
+	// T3 2.4
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/category/{categoryId}")
+	public OfferEntity changeCategory(@PathVariable Integer id, @PathVariable Integer categoryId) {
+
+		OfferEntity offer = offerRepository.findById(id).orElse(null);
+		if (offer == null)
+			return null;
+
+		CategoryEntity category = categoryRepository.findById(categoryId).orElse(null);
+		if (category == null)
+			return offer;
+
+		offer.setCategory(category);
+		offerRepository.save(offer);
+
+		return offer;
+	}
+
+	//delete mapping
+	// T2 3.6
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public OfferEntity delete(@PathVariable Integer id) {
+
+		OfferEntity offer = offerRepository.findById(id).orElse(null);
+		if (offer == null)
+			return null;
+
+		offerRepository.delete(offer);
+
+		return offer;
 	}
 }

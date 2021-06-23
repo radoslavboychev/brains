@@ -1,119 +1,160 @@
-/**
- * T3 Projekat Zadaci
- * Zadatak 1.1
- */
 package com.iktpreobuka.project.entities;
 
-import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.iktpreobuka.project.enums.Role;
 
 @Entity
 public class UserEntity {
 
-	// attributes
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private int id;
-	
-	@Column(name = "firstName")
-	private String first_name;
-	
-	@Column(name = "lastName")
-	private String last_name;
-	
-	@Column(name = "username")
-	private String username;
-	
-	@Column(name = "password")
-	private String password;
-	
-	@Column(name = "email")
-	private String email;
+	protected Integer id;
 
-	public enum EUserRole {
-		ROLE_CUSTOMER, ROLE_ADMIN, ROLE_SELLER
+	@Column(nullable = false)
+	protected String firstName;
+
+	@Column(nullable = false)
+	protected String lastName;
+
+	@Column(nullable = false)
+	protected String username;
+
+	@Column(nullable = false)
+	protected String password;
+
+	@Column(nullable = false)
+	protected String email;
+
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	protected Role userRole;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
+	protected List<OfferEntity> offers = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
+	protected List<BillEntity> bills = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
+	protected List<VoucherEntity> vouchers = new ArrayList<>();
+
+	@Version
+	private Integer version;
+
+	public UserEntity() {
 	}
 
-	@Column(name = "userRole")
-	//enum user roles
-	private EUserRole userRole;
-
-	// constructor
-	public UserEntity(int id, String first_name, String last_name, String email, String username, String password,
-			EUserRole userRole) {
+	public UserEntity(String firstName, String lastName, String username, String password, String email,
+			Role userRole) {
 		super();
-		this.id = id;
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.userRole = userRole;
 	}
 
-	// getters & setter
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public String getFirst_name() {
-		return first_name;
-	}
-
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
-	}
-
-	public String getLast_name() {
-		return last_name;
-	}
-
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getPassword() {
 		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
+	public Role getUserRole() {
+		return userRole;
+	}
+
+	public List<OfferEntity> getOffers() {
+		return offers;
+	}
+
+	public List<BillEntity> getBills() {
+		return bills;
+	}
+
+	public List<VoucherEntity> getVouchers() {
+		return vouchers;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public EUserRole getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(EUserRole userRole) {
+	public void setUserRole(Role userRole) {
 		this.userRole = userRole;
 	}
 
+	public void setOffers(List<OfferEntity> offers) {
+		this.offers = offers;
+	}
+
+	public void setBills(List<BillEntity> bills) {
+		this.bills = bills;
+	}
+
+	public void setVouchers(List<VoucherEntity> vouchers) {
+		this.vouchers = vouchers;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("[%05d] %s %s", id, firstName, lastName);
+	}
 }
