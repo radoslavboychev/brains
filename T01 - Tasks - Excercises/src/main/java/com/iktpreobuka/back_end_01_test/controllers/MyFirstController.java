@@ -167,14 +167,14 @@ public class MyFirstController {
 
 	@GetMapping("/dictionary")
 	@ResponseBody
-	public String dictionary(@RequestParam String rec) {
+	public String dictionary(@RequestParam String word) {
 
 		Map<String, String> dictionary = new HashMap<String, String>();
 
-		dictionary.put("aardvark", "mravojed");
-		dictionary.put("car", "auto");
+		dictionary.put("man", "bowl");
+		dictionary.put("spider", "cat");
 
-		return dictionary.containsKey(rec) ? String.format("Prevod reci '%s' : %s %n", rec, dictionary.get(rec))
-				: String.format("Rec %s ne postoji u recniku.", rec);
+		return dictionary.containsKey(word) ? String.format("Word means: '%s' : %s %n", word, dictionary.get(word))
+				: String.format("Word %s is not in the dictionary.", word);
 	}
 }
